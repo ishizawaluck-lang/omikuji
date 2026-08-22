@@ -1,399 +1,1148 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>おみくじ</title>
 
-    <title>おもしろおみくじ</title>
+<style>
+* {
+    box-sizing: border-box;
+}
 
-    <style>
-        body {
-            font-family: sans-serif;
-            text-align: center;
-            background: #fff3d6;
-            padding: 60px 20px;
-        }
+body {
+    margin: 0;
+    font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
+    background: linear-gradient(135deg, #fff7df, #ffe4e4);
+    color: #333;
+    min-height: 100vh;
+}
 
-        h1 {
-            font-size: 42px;
-            margin-bottom: 40px;
-        }
+header {
+    text-align: center;
+    padding: 25px 15px 10px;
+}
 
-        #result {
-            background: white;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            min-height: 120px;
-        }
+h1 {
+    margin: 0;
+    font-size: 38px;
+}
 
-        .name {
-            font-size: 42px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+.subtitle {
+    margin-top: 8px;
+    color: #777;
+}
 
-        .message {
-            font-size: 24px;
-            line-height: 1.7;
-        }
+.status {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 20px auto;
+}
 
-        .item {
-            margin-top: 20px;
-            font-size: 20px;
-            color: #555;
-        }
+.status-box {
+    background: white;
+    border-radius: 15px;
+    padding: 12px 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    font-weight: bold;
+}
 
-        .already {
-            color: #d62828;
-            font-size: 24px;
-            font-weight: bold;
-        }
+.container {
+    width: min(1000px, 94%);
+    margin: auto;
+}
 
-        button {
-            font-size: 25px;
-            padding: 18px 45px;
-            border: none;
-            border-radius: 15px;
-            background: #e63946;
-            color: white;
-            cursor: pointer;
-        }
+.card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 22px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
 
-        button:hover {
-            background: #c92f3b;
-        }
+button {
+    border: none;
+    border-radius: 14px;
+    padding: 14px 22px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
 
-        button:disabled {
-            background: #999;
-            cursor: not-allowed;
-        }
-    </style>
+button:hover {
+    transform: translateY(-2px);
+}
+
+.main-button {
+    display: block;
+    margin: 20px auto 5px;
+    background: #d33;
+    color: white;
+    font-size: 21px;
+    padding: 17px 35px;
+}
+
+.main-button:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.result {
+    display: none;
+    text-align: center;
+    animation: appear 0.5s ease;
+}
+
+.result-name {
+    font-size: 42px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.result-text {
+    font-size: 19px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+.reward {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 15px;
+    background: #fff5bd;
+    font-weight: bold;
+}
+
+.mission {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px;
+    margin: 10px 0;
+    background: #fafafa;
+    border-radius: 14px;
+    border: 1px solid #eee;
+}
+
+.mission.done {
+    background: #e8ffe9;
+    border-color: #76c77c;
+}
+
+.mission-title {
+    font-weight: bold;
+}
+
+.mission-reward {
+    color: #b87900;
+    white-space: nowrap;
+}
+
+.progress {
+    height: 8px;
+    background: #ddd;
+    border-radius: 20px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.progress-inner {
+    height: 100%;
+    background: #d33;
+    width: 0%;
+    transition: 0.4s;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.book-item {
+    border-radius: 15px;
+    padding: 15px;
+    background: #f5f5f5;
+    text-align: center;
+    min-height: 95px;
+}
+
+.book-item.unlocked {
+    background: #fff4bd;
+}
+
+.book-item.locked {
+    color: #999;
+}
+
+.badge {
+    display: inline-block;
+    background: #333;
+    color: white;
+    padding: 7px 13px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.notice {
+    text-align: center;
+    color: #777;
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none;
+}
+
+.reset-button {
+    background: #555;
+    color: white;
+    margin-top: 10px;
+    font-size: 12px;
+    padding: 9px 14px;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 30px;
+    }
+
+    .result-name {
+        font-size: 32px;
+    }
+
+    .mission {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <h1>⛩️ ちゃんこ鍋みくじ ⛩️</h1>
+<header>
+    <h1>🎴 おみくじ 🎴</h1>
+    <div class="subtitle">今日の運勢を占おう！</div>
 
-    <div id="result">
-        <div class="name">？？？</div>
-        <div class="message">今日のおみくじを引いてください！</div>
+    <div class="status">
+        <div class="status-box">🪙 コイン：<span id="coins">0</span></div>
+        <div class="status-box">🎴 回数：<span id="drawCount">0</span>回</div>
+        <div class="status-box">📚 図鑑：<span id="bookCount">0</span>/<span id="totalCount">0</span></div>
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <button id="drawButton" class="main-button" onclick="drawOmikuji()">
+            🎴 おみくじを引く
+        </button>
+
+        <div id="dailyNotice" class="notice"></div>
+
+        <div id="result" class="result">
+            <div class="result-name" id="resultName"></div>
+            <div class="result-text" id="resultText"></div>
+
+            <div class="reward">
+                🪙 今回のコイン：<span id="resultCoins">0</span>コイン
+            </div>
+
+            <div id="missionReward" class="reward hidden"></div>
+        </div>
     </div>
 
-    <button id="omikujiButton" onclick="omikuji()">
-        🎴 おみくじを引く
-    </button>
+    <div class="card">
+        <h2>🏆 ミッション</h2>
+
+        <div id="missions"></div>
+    </div>
+
+    <div class="card">
+        <h2>📚 おみくじ図鑑</h2>
+        <p>一度でも引いたおみくじが登録されます。</p>
+
+        <div id="collection" class="grid"></div>
+    </div>
+
+    <div class="card">
+        <h2>🏅 称号</h2>
+        <div id="titleArea">
+            まだ称号を獲得していません。
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>💴 カウンシー報酬</h2>
+        <p>
+            カウンシーはあなたのサーバーで使用する通貨です。<br>
+            このサイトでは獲得したことを表示するだけです。
+        </p>
+
+        <div id="counsyArea">
+            カウンシー：0
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>💡 現在の仕様</h2>
+        <p>
+            ・おみくじは1日1回<br>
+            ・おみくじを引くと結果に応じてコイン獲得<br>
+            ・ミッション報酬は各1回のみ<br>
+            ・図鑑は一度引いた種類を記録<br>
+            ・全種類を集めると「おみくじ別班」
+        </p>
+
+        <button class="reset-button" onclick="resetData()">
+            データをリセット（テスト用）
+        </button>
+    </div>
+
+</div>
+
+<script>
+
+/* =========================
+   おみくじデータ
+========================= */
+
+const omikuji = [
+
+    {
+        name: "小吉",
+        text: "割りばしがうまく割れるかも",
+        type: "normal",
+        coins: 5
+    },
+
+    {
+        name: "中吉",
+        text: "茶柱立つかも",
+        type: "normal",
+        coins: 5
+    },
+
+    {
+        name: "吉",
+        text: "自分の思いついたことやってみたら成功するかも",
+        type: "normal",
+        coins: 5
+    },
+
+    {
+        name: "半吉",
+        text: "ワンチャン褒められるよ",
+        type: "normal",
+        coins: 5
+    },
+
+    {
+        name: "末吉",
+        text: "まあ別に何も起こらない",
+        type: "normal",
+        coins: 5
+    },
+
+    {
+        name: "末小吉",
+        text: "自分の発言には気を付けよう　ラッキーアイテム：思いやりの精神",
+        type: "normal",
+        coins: 1
+    },
+
+    {
+        name: "凶",
+        text: "一回はこけるよ　ラッキーアイテム：危機感",
+        type: "normal",
+        coins: 1
+    },
+
+    {
+        name: "小凶",
+        text: "立ち眩みすることがあるよ　ラッキーアイテム：健康",
+        type: "normal",
+        coins: 1
+    },
+
+    {
+        name: "半凶",
+        text: "冷蔵庫を開けたら物が何個か落ちてきます　ラッキーアイテム：整理整頓",
+        type: "normal",
+        coins: 1
+    },
+
+    {
+        name: "末凶",
+        text: "なにかが机の間に落ちていやな気分になります　ラッキーアイテム：長い棒",
+        type: "normal",
+        coins: 1
+    },
+
+    {
+        name: "大凶",
+        text: "今日はかなり注意が必要です　ラッキーアイテム：聖書",
+        type: "normal",
+        coins: 1
+    },
+
+    {
+        name: "狩野英孝吉",
+        text: "ライトが割れました　ラッキーアイテム：如意棒",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "ようごん吉",
+        text: "ようよう白く成りゆく山際　ラッキーアイテム：清少納GON",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "ディオ吉",
+        text: "お前は今まで食ってきたパンの枚数を覚えているのか　ラッキーアイテム：記憶力/勇気",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "バイオ吉",
+        text: "お前も今日から家族だ　ラッキーアイテム：好き嫌いしない口",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "真島吉",
+        text: "そこの桐生ちゃん止まりなさい　ラッキーアイテム：桐生一馬",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "鶏吉",
+        text: "do you know what time it is?　ラッキーアイテム：トランシーバー",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "レヴォリューション吉",
+        text: "夏を刺激するような勢いで、今日は思い切って行動してみよう！　ラッキーアイテム：松岡修造",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "丸亀吉",
+        text: "丸亀製麺について熱く語りたくなる日　ラッキーアイテム：うどん",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "丸亀吉２",
+        text: "今日はとにかく丸亀製麺が気になる日　ラッキーアイテム：手打ち麺",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "布団ちゃん吉",
+        text: "～君と夏の終わり～　ちゃっこい茶割り　ここの鶏皮ってカリカリ？　ラッキーアイテム：放屁",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "陣内智則吉",
+        text: "笑いのニューウェーブはこの男ーーー！！！陣内智則！！！！！！！！！！　ラッキーアイテム：ノリのよさ",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "GON吉",
+        text: "お前！それは犬のほうを助けなきゃダメだろ！！　ラッキーアイテム：猫",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "葉吉",
+        text: "おっけー無理しね　ラッキーアイテム：あきらめも肝心",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "乙骨吉",
+        text: "よかったーーーwwwwwwwwwwwwwww　はっwwwwwwwww　ラッキーアイテム：安心",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "偽骨吉",
+        text: "今日はなんだか勢いだけはすごい日　ラッキーアイテム：ゆるゆる",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "クラピカ吉",
+        text: "ジャッジメントチェーン　ラッキーアイテム：クルタ族の目",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "偽ピカ吉",
+        text: "エンペラーペンギンタイム　ラッキーアイテム：ぺんぎん",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "MASAAKI吉",
+        text: "吉を見たその日から運命を感じたんだ　ラッキーアイテム：探索力",
+        type: "unique",
+        coins: 10
+    },
+
+    {
+        name: "大吉",
+        text: "大体のことがうまくいく　ラッキーアイテム：チームワーク",
+        type: "normal",
+        coins: 50
+    },
+
+    {
+        name: "超特大吉",
+        text: "誰かからお賽銭がもらえるかも　ラッキーアイテム：我慢",
+        type: "super",
+        coins: 100
+    }
+
+];
 
 
-    <script>
+/* =========================
+   保存データ
+========================= */
 
-        const results = [
+let data = JSON.parse(localStorage.getItem("omikujiData")) || {
 
-            {
-                name: "小吉",
-                message: "割りばしがうまく割れるかも"
-            },
+    coins: 0,
 
-            {
-                name: "中吉",
-                message: "茶柱立つかも"
-            },
+    counsy: 0,
 
-            {
-                name: "吉",
-                message: "自分の思いついたことやってみたら成功するかも"
-            },
+    drawCount: 0,
 
-            {
-                name: "半吉",
-                message: "ワンチャン褒められるよ"
-            },
+    collected: [],
 
-            {
-                name: "末吉",
-                message: "まあ別に何も起こらない"
-            },
+    missions: {
+        first: false,
+        ten: false,
+        thirty: false,
+        super: false,
+        unique: false,
+        complete: false
+    },
 
-            {
-                name: "末小吉",
-                message: "自分の発言には気を付けよう",
-                item: "思いやりの精神"
-            },
+    title: "",
 
-            {
-                name: "凶",
-                message: "一回はこけるよ",
-                item: "危機感"
-            },
+    lastDrawDate: ""
 
-            {
-                name: "小凶",
-                message: "立ち眩みすることがあるよ",
-                item: "健康"
-            },
-
-            {
-                name: "半凶",
-                message: "冷蔵庫を開けたら物が何個か落ちてきます",
-                item: "整理整頓"
-            },
-
-            {
-                name: "末凶",
-                message: "なにかが机の間に落ちていやな気分になります",
-                item: "長い棒"
-            },
-
-            {
-                name: "大凶",
-                message: "ワンチャン死ぬ日になります",
-                item: "聖書"
-            },
-
-            {
-                name: "狩野英孝吉",
-                message: "ライトが割れました",
-                item: "如意棒"
-            },
-
-            {
-                name: "ようごん吉",
-                message: "ようよう白く成りゆく山際",
-                item: "清少納GON"
-            },
-
-            {
-                name: "ディオ吉",
-                message: "今まで食ってきたパンの枚数を思い出してみろ",
-                item: "記憶力 / 勇気"
-            },
-
-            {
-                name: "バイオ吉",
-                message: "お前も今日から家族だ",
-                item: "好き嫌いしない口"
-            },
-
-            {
-                name: "真島吉",
-                message: "そこの桐生ちゃん止まりなさい",
-                item: "桐生一馬"
-            },
-
-            {
-                name: "鶏吉",
-                message: "do you know what time it is?",
-                item: "トランシーバー"
-            },
-
-            {
-                name: "レヴォリューション吉",
-                message: "妖精たちが! 夏を刺激するナマ足! 魅惑の! マーメイド!!出すとこ出して!! たわわになったらほんものの恋が できそうかい!!!!!!!!",
-                item: "松岡修造"
-            },
-
-            {
-                name: "丸亀吉",
-                message: "は？死ね死ね殺すぞなぜ生きているのか本来なら拷問爆殺絞首刑許されない木っ端みじんにするぞ丸亀製麺",
-                item: "うどん"
-            },
-
-            {
-                name: "丸亀吉２",
-                message: "は？殺殺殺すぞ許されるはずがない火だるまギロチン高圧電流もちろん即死だお前の命はない丸亀製麺",
-                item: "手打ち麺"
-            },
-
-            {
-                name: "布団ちゃん吉",
-                message: "～君と夏の終わり～　ちゃっこい茶割り　ここの鶏皮ってカリカリ？",
-                item: "放屁"
-            },
-
-            {
-                name: "陣内智則吉",
-                message: "笑いのニューウェーブはこの男ーーー！！！",
-                item: "ノリのよさ"
-            },
-
-            {
-                name: "GON吉",
-                message: "お前！それは犬のほうを助けなきゃダメだろ！！",
-                item: "猫"
-            },
-
-            {
-                name: "葉吉",
-                message: "おっけー無理しね!!",
-                item: "あきらめも肝心"
-            },
-
-            {
-                name: "乙骨吉",
-                message: "よかったーーー！ はっ！",
-                item: "安心"
-            },
-
-            {
-                name: "偽骨吉",
-                message: "直哉さんの御珍棒でかかったーーｗｗ",
-                item: "ゆるゆる"
-            },
-
-            {
-                name: "クラピカ吉",
-                message: "ジャッジメントチェーン",
-                item: "クルタ族の目"
-            },
-
-            {
-                name: "偽ピカ吉",
-                message: "エンペラーペンギンタイム",
-                item: "ぺんぎん"
-            },
-
-            {
-                name: "MASAAKI吉",
-                message: "吉を見たその日から運命を感じたんだ",
-                item: "探索力"
-            },
-
-            {
-                name: "大吉",
-                message: "大体のことがうまくいく",
-                item: "チームワーク"
-            },
-
-            {
-                name: "超特大吉",
-                message: "誰かからお賽銭がもらえるかも",
-                item: "我慢"
-            }
-
-        ];
+};
 
 
-        // 今日の日付を取得する
-        function getToday() {
+/* =========================
+   保存
+========================= */
 
-            const now = new Date();
+function saveData() {
 
-            return now.getFullYear()
-                + "-"
-                + (now.getMonth() + 1)
-                + "-"
-                + now.getDate();
+    localStorage.setItem(
+        "omikujiData",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =========================
+   今日の日付
+========================= */
+
+function getToday() {
+
+    const d = new Date();
+
+    return d.getFullYear()
+        + "-"
+        + String(d.getMonth() + 1).padStart(2, "0")
+        + "-"
+        + String(d.getDate()).padStart(2, "0");
+
+}
+
+
+/* =========================
+   1日1回チェック
+========================= */
+
+function alreadyDrawnToday() {
+
+    return data.lastDrawDate === getToday();
+
+}
+
+
+/* =========================
+   おみくじを引く
+========================= */
+
+function drawOmikuji() {
+
+    if (alreadyDrawnToday()) {
+
+        alert("今日はもうおみくじを引いています！\nまた明日引いてください🎴");
+
+        return;
+
+    }
+
+
+    const result =
+        omikuji[Math.floor(Math.random() * omikuji.length)];
+
+
+    data.lastDrawDate = getToday();
+
+    data.drawCount++;
+
+
+    /* コイン獲得 */
+
+    data.coins += result.coins;
+
+
+    /* 図鑑登録 */
+
+    if (!data.collected.includes(result.name)) {
+
+        data.collected.push(result.name);
+
+    }
+
+
+    /* 画面表示 */
+
+    document.getElementById("result").style.display = "block";
+
+    document.getElementById("resultName").textContent =
+        result.name;
+
+    document.getElementById("resultText").textContent =
+        result.text;
+
+    document.getElementById("resultCoins").textContent =
+        result.coins;
+
+
+    /* 特別演出 */
+
+    if (result.type === "super") {
+
+        document.getElementById("resultName").style.color = "#d89b00";
+
+    } else if (result.type === "unique") {
+
+        document.getElementById("resultName").style.color = "#7a42d1";
+
+    } else if (result.name === "大吉") {
+
+        document.getElementById("resultName").style.color = "#d33";
+
+    } else {
+
+        document.getElementById("resultName").style.color = "#333";
+
+    }
+
+
+    /* ミッション */
+
+    let missionMessages = [];
+
+
+    if (!data.missions.first && data.drawCount >= 1) {
+
+        data.missions.first = true;
+
+        data.coins += 100;
+
+        missionMessages.push(
+            "🏆「おみくじを1回引く」達成！\n+100コイン"
+        );
+
+    }
+
+
+    if (!data.missions.ten && data.drawCount >= 10) {
+
+        data.missions.ten = true;
+
+        data.coins += 1000;
+
+        missionMessages.push(
+            "🏆「おみくじを10回引く」達成！\n+1,000コイン"
+        );
+
+    }
+
+
+    if (!data.missions.thirty && data.drawCount >= 30) {
+
+        data.missions.thirty = true;
+
+        data.coins += 2000;
+
+        missionMessages.push(
+            "🏆「おみくじを30回引く」達成！\n+2,000コイン"
+        );
+
+    }
+
+
+    /* 超特大吉ミッション */
+
+    if (
+        result.name === "超特大吉"
+        &&
+        !data.missions.super
+    ) {
+
+        data.missions.super = true;
+
+        data.counsy += 5000;
+
+        missionMessages.push(
+            "🌟「超特大吉を1回引く」達成！\n+5,000カウンシー"
+        );
+
+    }
+
+
+    /* ユニークくじミッション */
+
+    if (
+        result.type === "unique"
+        &&
+        !data.missions.unique
+    ) {
+
+        data.missions.unique = true;
+
+        data.counsy += 2000;
+
+        missionMessages.push(
+            "🎭「ユニークくじを1回引く」達成！\n+2,000カウンシー"
+        );
+
+    }
+
+
+    /* 全種類コンプリート */
+
+    if (
+        !data.missions.complete
+        &&
+        data.collected.length >= omikuji.length
+    ) {
+
+        data.missions.complete = true;
+
+        data.coins += 3000;
+
+        data.title = "おみくじ別班";
+
+        missionMessages.push(
+            "📚 全種類コンプリート！\n+3,000コイン\n🏅 称号「おみくじ別班」獲得！"
+        );
+
+    }
+
+
+    /* ミッション表示 */
+
+    const missionBox =
+        document.getElementById("missionReward");
+
+    if (missionMessages.length > 0) {
+
+        missionBox.classList.remove("hidden");
+
+        missionBox.textContent =
+            missionMessages.join("\n\n");
+
+    } else {
+
+        missionBox.classList.add("hidden");
+
+    }
+
+
+    saveData();
+
+    updateDisplay();
+
+    updateButton();
+
+}
+
+
+/* =========================
+   画面更新
+========================= */
+
+function updateDisplay() {
+
+    document.getElementById("coins").textContent =
+        data.coins.toLocaleString();
+
+
+    document.getElementById("drawCount").textContent =
+        data.drawCount;
+
+
+    document.getElementById("bookCount").textContent =
+        data.collected.length;
+
+
+    document.getElementById("totalCount").textContent =
+        omikuji.length;
+
+
+    document.getElementById("counsyArea").textContent =
+        "カウンシー："
+        +
+        data.counsy.toLocaleString();
+
+
+    if (data.title) {
+
+        document.getElementById("titleArea").innerHTML =
+            "🏅 <span class='badge'>"
+            +
+            data.title
+            +
+            "</span>";
+
+    } else {
+
+        document.getElementById("titleArea").textContent =
+            "まだ称号を獲得していません。";
+
+    }
+
+
+    updateMissions();
+
+    updateCollection();
+
+}
+
+
+/* =========================
+   ミッション表示
+========================= */
+
+function updateMissions() {
+
+    const box =
+        document.getElementById("missions");
+
+
+    const missions = [
+
+        {
+            done: data.missions.first,
+            title: "おみくじを1回引く",
+            reward: "100コイン",
+            progress: Math.min(data.drawCount, 1),
+            max: 1
+        },
+
+        {
+            done: data.missions.ten,
+            title: "おみくじを10回引く",
+            reward: "1,000コイン",
+            progress: Math.min(data.drawCount, 10),
+            max: 10
+        },
+
+        {
+            done: data.missions.thirty,
+            title: "おみくじを30回引く",
+            reward: "2,000コイン",
+            progress: Math.min(data.drawCount, 30),
+            max: 30
+        },
+
+        {
+            done: data.missions.super,
+            title: "超特大吉を1枚引く",
+            reward: "5,000カウンシー",
+            progress: data.missions.super ? 1 : 0,
+            max: 1
+        },
+
+        {
+            done: data.missions.unique,
+            title: "ユニークくじを1枚引く",
+            reward: "2,000カウンシー",
+            progress: data.missions.unique ? 1 : 0,
+            max: 1
+        },
+
+        {
+            done: data.missions.complete,
+            title: "全種類コンプリート",
+            reward: "3,000コイン＋称号「おみくじ別班」",
+            progress: data.collected.length,
+            max: omikuji.length
+        }
+
+    ];
+
+
+    box.innerHTML = "";
+
+
+    missions.forEach(m => {
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "mission"
+            +
+            (m.done ? " done" : "");
+
+
+        const percent =
+            Math.min(
+                100,
+                (m.progress / m.max) * 100
+            );
+
+
+        div.innerHTML = `
+
+            <div style="width:100%">
+
+                <div class="mission-title">
+
+                    ${m.done ? "✅" : "⬜"}
+                    ${m.title}
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                        class="progress-inner"
+                        style="width:${percent}%">
+                    </div>
+
+                </div>
+
+                <small>
+                    ${m.progress} / ${m.max}
+                </small>
+
+            </div>
+
+            <div class="mission-reward">
+
+                ${m.reward}
+
+            </div>
+
+        `;
+
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+/* =========================
+   図鑑
+========================= */
+
+function updateCollection() {
+
+    const box =
+        document.getElementById("collection");
+
+
+    box.innerHTML = "";
+
+
+    omikuji.forEach(item => {
+
+        const unlocked =
+            data.collected.includes(item.name);
+
+
+        const div =
+            document.createElement("div");
+
+
+        div.className =
+            "book-item "
+            +
+            (unlocked
+                ? "unlocked"
+                : "locked");
+
+
+        if (unlocked) {
+
+            div.innerHTML = `
+
+                <strong>🎴 ${item.name}</strong>
+
+                <br>
+
+                <small>
+                    ${item.text}
+                </small>
+
+            `;
+
+        } else {
+
+            div.innerHTML = `
+
+                <strong>❓ ???</strong>
+
+                <br>
+
+                <small>
+                    未獲得
+                </small>
+
+            `;
 
         }
 
 
-        // おみくじを引く
-        function omikuji() {
+        box.appendChild(div);
 
-            // 今日の日付
-            const today = getToday();
+    });
 
-            // 前回引いた日付を確認
-            const lastDate = localStorage.getItem("omikujiDate");
+}
 
 
-            // 今日すでに引いている場合
-            if (lastDate === today) {
+/* =========================
+   ボタン状態
+========================= */
 
-                document.getElementById("result").innerHTML = `
-                    <div class="already">
-                        ⚠️ 今日はもうおみくじを引きました！
-                    </div>
+function updateButton() {
 
-                    <div class="message">
-                        また明日引いてね！
-                    </div>
-                `;
+    const button =
+        document.getElementById("drawButton");
 
-                document.getElementById("omikujiButton").disabled = true;
-
-                return;
-            }
+    const notice =
+        document.getElementById("dailyNotice");
 
 
-            // ランダムに結果を選ぶ
-            const random =
-                Math.floor(Math.random() * results.length);
+    if (alreadyDrawnToday()) {
 
-            const result = results[random];
+        button.disabled = true;
 
-
-            // 結果を表示
-            let html = "";
-
-            html += `
-                <div class="name">
-                    ${result.name}
-                </div>
-            `;
-
-            html += `
-                <div class="message">
-                    ${result.message}
-                </div>
-            `;
+        button.textContent =
+            "🌙 また明日引いてください";
 
 
-            if (result.item) {
+        notice.textContent =
+            "今日はもうおみくじを引きました。";
 
-                html += `
-                    <div class="item">
-                        🍀 ラッキーアイテム：
-                        ${result.item}
-                    </div>
-                `;
+    } else {
 
-            }
+        button.disabled = false;
 
-
-            document.getElementById("result").innerHTML = html;
+        button.textContent =
+            "🎴 おみくじを引く";
 
 
-            // 今日引いたことを記録
-            localStorage.setItem("omikujiDate", today);
+        notice.textContent =
+            "今日はまだ引いていません！";
+
+    }
+
+}
 
 
-            // ボタンを無効化
-            document.getElementById("omikujiButton").disabled = true;
+/* =========================
+   テスト用リセット
+========================= */
 
-        }
+function resetData() {
+
+    const answer =
+        confirm(
+            "本当にデータをリセットしますか？\n\n"
+            +
+            "コイン・回数・図鑑・ミッションが全部消えます。"
+        );
 
 
-        // ページを開いたときにも確認
-        window.onload = function() {
-
-            const today = getToday();
-
-            const lastDate =
-                localStorage.getItem("omikujiDate");
+    if (!answer) return;
 
 
-            if (lastDate === today) {
+    localStorage.removeItem("omikujiData");
 
-                document.getElementById("result").innerHTML = `
-                    <div class="already">
-                        ⚠️ 今日はもう引きました！
-                    </div>
+    location.reload();
 
-                    <div class="message">
-                        また明日引いてね！
-                    </div>
-                `;
+}
 
-                document.getElementById("omikujiButton").disabled = true;
 
-            }
+/* =========================
+   起動
+========================= */
 
-        };
+updateDisplay();
 
-    </script>
+updateButton();
+
+</script>
 
 </body>
 </html>
