@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>おもしろおみくじ</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            background: #fff3d6;
+            padding: 60px 20px;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 40px;
+        }
+
+        #result {
+            background: white;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            min-height: 120px;
+        }
+
+        .name {
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            font-size: 24px;
+            line-height: 1.7;
+        }
+
+        .item {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #555;
+        }
+
+        .already {
+            color: #d62828;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        button {
+            font-size: 25px;
+            padding: 18px 45px;
+            border: none;
+            border-radius: 15px;
+            background: #e63946;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #c92f3b;
+        }
+
+        button:disabled {
+            background: #999;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>⛩️ ちゃんこ鍋みくじ ⛩️</h1>
+
+    <div id="result">
+        <div class="name">？？？</div>
+        <div class="message">今日のおみくじを引いてください！</div>
+    </div>
+
+    <button id="omikujiButton" onclick="omikuji()">
+        🎴 おみくじを引く
+    </button>
+
+
+    <script>
+
+        const results = [
+
+            {
+                name: "小吉",
+                message: "割りばしがうまく割れるかも"
+            },
+
+            {
+                name: "中吉",
+                message: "茶柱立つかも"
+            },
+
+            {
+                name: "吉",
+                message: "自分の思いついたことやってみたら成功するかも"
+            },
+
+            {
+                name: "半吉",
+                message: "ワンチャン褒められるよ"
+            },
+
+            {
+                name: "末吉",
+                message: "まあ別に何も起こらない"
+            },
+
+            {
+                name: "末小吉",
+                message: "自分の発言には気を付けよう",
+                item: "思いやりの精神"
+            },
+
+            {
+                name: "凶",
+                message: "一回はこけるよ",
+                item: "危機感"
+            },
+
+            {
+                name: "小凶",
+                message: "立ち眩みすることがあるよ",
+                item: "健康"
+            },
+
+            {
+                name: "半凶",
+                message: "冷蔵庫を開けたら物が何個か落ちてきます",
+                item: "整理整頓"
+            },
+
+            {
+                name: "末凶",
+                message: "なにかが机の間に落ちていやな気分になります",
+                item: "長い棒"
+            },
+
+            {
+                name: "大凶",
+                message: "ワンチャン死ぬ日になります",
+                item: "聖書"
+            },
+
+            {
+                name: "狩野英孝吉",
+                message: "ライトが割れました",
+                item: "如意棒"
+            },
+
+            {
+                name: "ようごん吉",
+                message: "ようよう白く成りゆく山際",
+                item: "清少納GON"
+            },
+
+            {
+                name: "ディオ吉",
+                message: "今まで食ってきたパンの枚数を思い出してみろ",
+                item: "記憶力 / 勇気"
+            },
+
+            {
+                name: "バイオ吉",
+                message: "お前も今日から家族だ",
+                item: "好き嫌いしない口"
+            },
+
+            {
+                name: "真島吉",
+                message: "そこの桐生ちゃん止まりなさい",
+                item: "桐生一馬"
+            },
+
+            {
+                name: "鶏吉",
+                message: "do you know what time it is?",
+                item: "トランシーバー"
+            },
+
+            {
+                name: "レヴォリューション吉",
+                message: "妖精たちが! 夏を刺激するナマ足! 魅惑の! マーメイド!!出すとこ出して!! たわわになったらほんものの恋が できそうかい!!!!!!!!",
+                item: "松岡修造"
+            },
+
+            {
+                name: "丸亀吉",
+                message: "は？死ね死ね殺すぞなぜ生きているのか本来なら拷問爆殺絞首刑許されない木っ端みじんにするぞ丸亀製麺",
+                item: "うどん"
+            },
+
+            {
+                name: "丸亀吉２",
+                message: "は？殺殺殺すぞ許されるはずがない火だるまギロチン高圧電流もちろん即死だお前の命はない丸亀製麺",
+                item: "手打ち麺"
+            },
+
+            {
+                name: "布団ちゃん吉",
+                message: "～君と夏の終わり～　ちゃっこい茶割り　ここの鶏皮ってカリカリ？",
+                item: "放屁"
+            },
+
+            {
+                name: "陣内智則吉",
+                message: "笑いのニューウェーブはこの男ーーー！！！",
+                item: "ノリのよさ"
+            },
+
+            {
+                name: "GON吉",
+                message: "お前！それは犬のほうを助けなきゃダメだろ！！",
+                item: "猫"
+            },
+
+            {
+                name: "葉吉",
+                message: "おっけー無理しね!!",
+                item: "あきらめも肝心"
+            },
+
+            {
+                name: "乙骨吉",
+                message: "よかったーーー！ はっ！",
+                item: "安心"
+            },
+
+            {
+                name: "偽骨吉",
+                message: "直哉さんの御珍棒でかかったーーｗｗ",
+                item: "ゆるゆる"
+            },
+
+            {
+                name: "クラピカ吉",
+                message: "ジャッジメントチェーン",
+                item: "クルタ族の目"
+            },
+
+            {
+                name: "偽ピカ吉",
+                message: "エンペラーペンギンタイム",
+                item: "ぺんぎん"
+            },
+
+            {
+                name: "MASAAKI吉",
+                message: "吉を見たその日から運命を感じたんだ",
+                item: "探索力"
+            },
+
+            {
+                name: "大吉",
+                message: "大体のことがうまくいく",
+                item: "チームワーク"
+            },
+
+            {
+                name: "超特大吉",
+                message: "誰かからお賽銭がもらえるかも",
+                item: "我慢"
+            }
+
+        ];
+
+
+        // 今日の日付を取得する
+        function getToday() {
+
+            const now = new Date();
+
+            return now.getFullYear()
+                + "-"
+                + (now.getMonth() + 1)
+                + "-"
+                + now.getDate();
+
+        }
+
+
+        // おみくじを引く
+        function omikuji() {
+
+            // 今日の日付
+            const today = getToday();
+
+            // 前回引いた日付を確認
+            const lastDate = localStorage.getItem("omikujiDate");
+
+
+            // 今日すでに引いている場合
+            if (lastDate === today) {
+
+                document.getElementById("result").innerHTML = `
+                    <div class="already">
+                        ⚠️ 今日はもうおみくじを引きました！
+                    </div>
+
+                    <div class="message">
+                        また明日引いてね！
+                    </div>
+                `;
+
+                document.getElementById("omikujiButton").disabled = true;
+
+                return;
+            }
+
+
+            // ランダムに結果を選ぶ
+            const random =
+                Math.floor(Math.random() * results.length);
+
+            const result = results[random];
+
+
+            // 結果を表示
+            let html = "";
+
+            html += `
+                <div class="name">
+                    ${result.name}
+                </div>
+            `;
+
+            html += `
+                <div class="message">
+                    ${result.message}
+                </div>
+            `;
+
+
+            if (result.item) {
+
+                html += `
+                    <div class="item">
+                        🍀 ラッキーアイテム：
+                        ${result.item}
+                    </div>
+                `;
+
+            }
+
+
+            document.getElementById("result").innerHTML = html;
+
+
+            // 今日引いたことを記録
+            localStorage.setItem("omikujiDate", today);
+
+
+            // ボタンを無効化
+            document.getElementById("omikujiButton").disabled = true;
+
+        }
+
+
+        // ページを開いたときにも確認
+        window.onload = function() {
+
+            const today = getToday();
+
+            const lastDate =
+                localStorage.getItem("omikujiDate");
+
+
+            if (lastDate === today) {
+
+                document.getElementById("result").innerHTML = `
+                    <div class="already">
+                        ⚠️ 今日はもう引きました！
+                    </div>
+
+                    <div class="message">
+                        また明日引いてね！
+                    </div>
+                `;
+
+                document.getElementById("omikujiButton").disabled = true;
+
+            }
+
+        };
+
+    </script>
+
+</body>
+</html>
