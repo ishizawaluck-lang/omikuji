@@ -3,327 +3,789 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>おみくじ</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
-    background: linear-gradient(135deg, #fff7df, #ffe4e4);
-    color: #333;
+    font-family:
+        "Yu Gothic",
+        "Hiragino Kaku Gothic ProN",
+        sans-serif;
+
+    background:
+        linear-gradient(135deg, #fff4d8, #ffe1e8);
+
     min-height: 100vh;
+    color: #333;
 }
 
-header {
-    text-align: center;
-    padding: 25px 15px 10px;
-}
 
-h1 {
-    margin: 0;
-    font-size: 38px;
-}
+/* =========================
+   共通
+========================= */
 
-.subtitle {
-    margin-top: 8px;
-    color: #777;
-}
-
-.status {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin: 20px auto;
-}
-
-.status-box {
-    background: white;
-    border-radius: 15px;
-    padding: 12px 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    font-weight: bold;
-}
-
-.container {
-    width: min(1000px, 94%);
-    margin: auto;
-}
-
-.card {
-    background: rgba(255,255,255,0.95);
-    border-radius: 22px;
+.screen {
+    min-height: 100vh;
     padding: 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-}
-
-button {
-    border: none;
-    border-radius: 14px;
-    padding: 14px 22px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-button:hover {
-    transform: translateY(-2px);
-}
-
-.main-button {
-    display: block;
-    margin: 20px auto 5px;
-    background: #d33;
-    color: white;
-    font-size: 21px;
-    padding: 17px 35px;
-}
-
-.main-button:disabled {
-    background: #aaa;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.result {
-    display: none;
-    text-align: center;
-    animation: appear 0.5s ease;
-}
-
-.result-name {
-    font-size: 42px;
-    font-weight: bold;
-    margin: 10px 0;
-}
-
-.result-text {
-    font-size: 19px;
-    line-height: 1.8;
-    white-space: pre-wrap;
-}
-
-.reward {
-    margin-top: 15px;
-    padding: 15px;
-    border-radius: 15px;
-    background: #fff5bd;
-    font-weight: bold;
-}
-
-.mission {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 15px;
-    margin: 10px 0;
-    background: #fafafa;
-    border-radius: 14px;
-    border: 1px solid #eee;
-}
-
-.mission.done {
-    background: #e8ffe9;
-    border-color: #76c77c;
-}
-
-.mission-title {
-    font-weight: bold;
-}
-
-.mission-reward {
-    color: #b87900;
-    white-space: nowrap;
-}
-
-.progress {
-    height: 8px;
-    background: #ddd;
-    border-radius: 20px;
-    margin-top: 8px;
-    overflow: hidden;
-}
-
-.progress-inner {
-    height: 100%;
-    background: #d33;
-    width: 0%;
-    transition: 0.4s;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-}
-
-.book-item {
-    border-radius: 15px;
-    padding: 15px;
-    background: #f5f5f5;
-    text-align: center;
-    min-height: 95px;
-}
-
-.book-item.unlocked {
-    background: #fff4bd;
-}
-
-.book-item.locked {
-    color: #999;
-}
-
-.badge {
-    display: inline-block;
-    background: #333;
-    color: white;
-    padding: 7px 13px;
-    border-radius: 20px;
-    margin-top: 10px;
-}
-
-.notice {
-    text-align: center;
-    color: #777;
-    margin-top: 10px;
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
-.reset-button {
-    background: #555;
+
+/* =========================
+   メイン画面
+========================= */
+
+#homeScreen {
+    text-align: center;
+}
+
+.title {
+    font-size: 42px;
+    font-weight: bold;
+    margin-top: 35px;
+}
+
+.subtitle {
+    color: #777;
+    margin-bottom: 35px;
+}
+
+
+.coin {
+    display: inline-block;
+
+    background: white;
+
+    padding: 10px 20px;
+
+    border-radius: 20px;
+
+    font-weight: bold;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.08);
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   ボタン
+========================= */
+
+.mainButton {
+
+    display: block;
+
+    width: min(420px, 90%);
+
+    margin: 15px auto;
+
+    padding: 18px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background: white;
+
+    box-shadow:
+        0 6px 18px rgba(0,0,0,0.1);
+
+    transition: 0.2s;
+}
+
+
+.mainButton:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 9px 22px rgba(0,0,0,0.15);
+}
+
+
+.drawButton {
+
+    background: #d93636;
+
     color: white;
-    margin-top: 10px;
-    font-size: 12px;
-    padding: 9px 14px;
+
+    font-size: 23px;
+
+    padding: 20px;
 }
 
-@keyframes appear {
+
+/* =========================
+   戻るボタン
+========================= */
+
+.backButton {
+
+    position: fixed;
+
+    top: 18px;
+
+    left: 18px;
+
+    border: none;
+
+    background: white;
+
+    border-radius: 50%;
+
+    width: 50px;
+
+    height: 50px;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.12);
+
+    z-index: 20;
+}
+
+
+/* =========================
+   結果
+========================= */
+
+#resultArea {
+
+    margin: 30px auto;
+
+    max-width: 700px;
+
+    background: white;
+
+    border-radius: 25px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.12);
+
+    animation: resultAppear 0.5s;
+}
+
+
+.resultName {
+
+    font-size: 45px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+
+.resultText {
+
+    font-size: 19px;
+
+    line-height: 1.8;
+
+    white-space: pre-wrap;
+}
+
+
+.resultCoins {
+
+    margin-top: 20px;
+
+    padding: 14px;
+
+    border-radius: 15px;
+
+    background: #fff2a8;
+
+    font-weight: bold;
+}
+
+
+@keyframes resultAppear {
+
     from {
+
         opacity: 0;
-        transform: scale(0.9);
+
+        transform: scale(0.75);
     }
 
     to {
+
         opacity: 1;
+
         transform: scale(1);
     }
 }
 
-@media (max-width: 600px) {
-    h1 {
-        font-size: 30px;
+
+/* =========================
+   ガチャ演出
+========================= */
+
+#gachaEffect {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle,
+            #fff,
+            #ffd86b,
+            #d33
+        );
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 100;
+
+    animation: gachaFlash 1.2s;
+}
+
+
+.gachaText {
+
+    color: white;
+
+    font-size: 55px;
+
+    font-weight: bold;
+
+    text-shadow:
+        0 5px 15px rgba(0,0,0,0.4);
+
+    animation: gachaZoom 1.2s;
+}
+
+
+@keyframes gachaFlash {
+
+    0% {
+        opacity: 0;
     }
 
-    .result-name {
+    30% {
+        opacity: 1;
+    }
+
+    70% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
+@keyframes gachaZoom {
+
+    0% {
+        transform: scale(0.2) rotate(-10deg);
+    }
+
+    70% {
+        transform: scale(1.2) rotate(5deg);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+/* =========================
+   ページ
+========================= */
+
+.page {
+
+    max-width: 1000px;
+
+    margin: auto;
+
+    padding-top: 40px;
+}
+
+
+.pageTitle {
+
+    text-align: center;
+
+    font-size: 35px;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   図鑑
+========================= */
+
+.bookGrid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(190px, 1fr)
+        );
+
+    gap: 15px;
+}
+
+
+.bookCard {
+
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    min-height: 130px;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.08);
+}
+
+
+.bookCard.locked {
+
+    color: #aaa;
+
+    text-align: center;
+}
+
+
+.bookCard.unlocked {
+
+    background: #fff8ca;
+}
+
+
+.bookName {
+
+    font-size: 21px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+
+.bookText {
+
+    line-height: 1.6;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   ミッション
+========================= */
+
+.missionList {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+
+.missionCard {
+
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.08);
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+.missionCard.completed {
+
+    background: #eaffea;
+}
+
+
+.missionTitle {
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+.missionReward {
+
+    color: #a86b00;
+
+    margin-top: 5px;
+}
+
+
+.receiveButton {
+
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 12px 18px;
+
+    background: #d93636;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+.receiveButton:disabled {
+
+    background: #aaa;
+
+    cursor: default;
+}
+
+
+.statusText {
+
+    color: #777;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   ショップ
+========================= */
+
+.comingSoon {
+
+    min-height: 60vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    font-size: 35px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   レスポンシブ
+========================= */
+
+@media(max-width:600px) {
+
+    .title {
         font-size: 32px;
     }
 
-    .mission {
+    .resultName {
+        font-size: 34px;
+    }
+
+    .gachaText {
+        font-size: 35px;
+    }
+
+    .missionCard {
         flex-direction: column;
         align-items: flex-start;
     }
+
 }
+
 </style>
 </head>
 
+
 <body>
 
-<header>
-    <h1>🎴 おみくじ 🎴</h1>
-    <div class="subtitle">今日の運勢を占おう！</div>
 
-    <div class="status">
-        <div class="status-box">🪙 コイン：<span id="coins">0</span></div>
-        <div class="status-box">🎴 回数：<span id="drawCount">0</span>回</div>
-        <div class="status-box">📚 図鑑：<span id="bookCount">0</span>/<span id="totalCount">0</span></div>
-    </div>
-</header>
+<!-- =========================
+     ガチャ演出
+========================= -->
 
-<div class="container">
+<div id="gachaEffect">
 
-    <div class="card">
-        <button id="drawButton" class="main-button" onclick="drawOmikuji()">
-            🎴 おみくじを引く
-        </button>
-
-        <div id="dailyNotice" class="notice"></div>
-
-        <div id="result" class="result">
-            <div class="result-name" id="resultName"></div>
-            <div class="result-text" id="resultText"></div>
-
-            <div class="reward">
-                🪙 今回のコイン：<span id="resultCoins">0</span>コイン
-            </div>
-
-            <div id="missionReward" class="reward hidden"></div>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2>🏆 ミッション</h2>
-
-        <div id="missions"></div>
-    </div>
-
-    <div class="card">
-        <h2>📚 おみくじ図鑑</h2>
-        <p>一度でも引いたおみくじが登録されます。</p>
-
-        <div id="collection" class="grid"></div>
-    </div>
-
-    <div class="card">
-        <h2>🏅 称号</h2>
-        <div id="titleArea">
-            まだ称号を獲得していません。
-        </div>
-    </div>
-
-    <div class="card">
-        <h2>💴 カウンシー報酬</h2>
-        <p>
-            カウンシーはあなたのサーバーで使用する通貨です。<br>
-            このサイトでは獲得したことを表示するだけです。
-        </p>
-
-        <div id="counsyArea">
-            カウンシー：0
-        </div>
-    </div>
-
-    <div class="card">
-        <h2>💡 現在の仕様</h2>
-        <p>
-            ・おみくじは1日1回<br>
-            ・おみくじを引くと結果に応じてコイン獲得<br>
-            ・ミッション報酬は各1回のみ<br>
-            ・図鑑は一度引いた種類を記録<br>
-            ・全種類を集めると「おみくじ別班」
-        </p>
-
-        <button class="reset-button" onclick="resetData()">
-            データをリセット（テスト用）
-        </button>
+    <div class="gachaText">
+        🎴 運命は決まった……！
     </div>
 
 </div>
 
+
+
+<!-- =========================
+     ホーム
+========================= -->
+
+<section id="homeScreen" class="screen">
+
+    <div class="title">
+        🎴 おみくじ 🎴
+    </div>
+
+    <div class="subtitle">
+        今日の運勢を占おう！
+    </div>
+
+
+    <div class="coin">
+        🪙 コイン：
+        <span id="coinDisplay">0</span>
+    </div>
+
+
+    <button
+        class="mainButton drawButton"
+        id="drawButton"
+        onclick="drawOmikuji()">
+
+        🎴 おみくじを引く
+
+    </button>
+
+
+    <div id="dailyMessage"></div>
+
+
+    <div id="resultArea" class="hidden">
+
+        <div
+            id="resultName"
+            class="resultName">
+        </div>
+
+        <div
+            id="resultText"
+            class="resultText">
+        </div>
+
+        <div class="resultCoins">
+
+            🪙 今回獲得：
+            <span id="resultCoin"></span>
+            コイン
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="mainButton"
+        onclick="showPage('bookScreen')">
+
+        📚 図鑑
+
+    </button>
+
+
+    <button
+        class="mainButton"
+        onclick="showPage('missionScreen')">
+
+        🏆 ミッション
+
+    </button>
+
+
+    <button
+        class="mainButton"
+        onclick="showPage('shopScreen')">
+
+        🛒 ショップ
+
+    </button>
+
+</section>
+
+
+
+<!-- =========================
+     図鑑
+========================= -->
+
+<section
+    id="bookScreen"
+    class="screen hidden">
+
+    <button
+        class="backButton"
+        onclick="showPage('homeScreen')">
+
+        ←
+
+    </button>
+
+
+    <div class="page">
+
+        <div class="pageTitle">
+            📚 おみくじ図鑑
+        </div>
+
+
+        <p style="text-align:center">
+
+            <span id="bookProgress">
+                0
+            </span>
+            /
+            <span id="bookTotal">
+                0
+            </span>
+            種類
+
+        </p>
+
+
+        <div
+            id="bookGrid"
+            class="bookGrid">
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     ミッション
+========================= -->
+
+<section
+    id="missionScreen"
+    class="screen hidden">
+
+    <button
+        class="backButton"
+        onclick="showPage('homeScreen')">
+
+        ←
+
+    </button>
+
+
+    <div class="page">
+
+        <div class="pageTitle">
+            🏆 ミッション
+        </div>
+
+
+        <div
+            id="missionList"
+            class="missionList">
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================
+     ショップ
+========================= -->
+
+<section
+    id="shopScreen"
+    class="screen hidden">
+
+    <button
+        class="backButton"
+        onclick="showPage('homeScreen')">
+
+        ←
+
+    </button>
+
+
+    <div class="page">
+
+        <div class="pageTitle">
+            🛒 ショップ
+        </div>
+
+
+        <div class="comingSoon">
+
+            🔒<br>
+            近日公開
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
 <script>
 
-/* =========================
+
+/* ==================================================
    おみくじデータ
-========================= */
+================================================== */
 
 const omikuji = [
 
@@ -448,14 +910,14 @@ const omikuji = [
 
     {
         name: "レヴォリューション吉",
-        text: "夏を刺激するような勢いで、今日は思い切って行動してみよう！　ラッキーアイテム：松岡修造",
+        text: "夏を思いっきり楽しもう！　ラッキーアイテム：松岡修造",
         type: "unique",
         coins: 10
     },
 
     {
         name: "丸亀吉",
-        text: "丸亀製麺について熱く語りたくなる日　ラッキーアイテム：うどん",
+        text: "今日は丸亀製麺について熱く語りたくなる日　ラッキーアイテム：うどん",
         type: "unique",
         coins: 10
     },
@@ -497,7 +959,7 @@ const omikuji = [
 
     {
         name: "乙骨吉",
-        text: "よかったーーーwwwwwwwwwwwwwww　はっwwwwwwwww　ラッキーアイテム：安心",
+        text: "よかったーーーwwwwwwwwwwwwwwwはっwwwwwwwww　ラッキーアイテム：安心",
         type: "unique",
         coins: 10
     },
@@ -547,39 +1009,65 @@ const omikuji = [
 ];
 
 
-/* =========================
-   保存データ
-========================= */
+/* ==================================================
+   データ
+================================================== */
 
-let data = JSON.parse(localStorage.getItem("omikujiData")) || {
+let data =
+    JSON.parse(
+        localStorage.getItem("omikujiData")
+    )
+    ||
+    {
 
-    coins: 0,
+        coins: 0,
 
-    counsy: 0,
+        drawCount: 0,
 
-    drawCount: 0,
+        collected: [],
 
-    collected: [],
+        lastDrawDate: "",
 
-    missions: {
-        first: false,
-        ten: false,
-        thirty: false,
-        super: false,
-        unique: false,
-        complete: false
-    },
+        missions: {
 
-    title: "",
+            first: {
+                progress: 0,
+                claimed: false
+            },
 
-    lastDrawDate: ""
+            ten: {
+                progress: 0,
+                claimed: false
+            },
 
-};
+            thirty: {
+                progress: 0,
+                claimed: false
+            },
+
+            super: {
+                progress: 0,
+                claimed: false
+            },
+
+            unique: {
+                progress: 0,
+                claimed: false
+            },
+
+            complete: {
+                progress: 0,
+                claimed: false
+            }
+
+        }
+
+    };
 
 
-/* =========================
+/* ==================================================
    保存
-========================= */
+================================================== */
 
 function saveData() {
 
@@ -591,11 +1079,11 @@ function saveData() {
 }
 
 
-/* =========================
-   今日の日付
-========================= */
+/* ==================================================
+   日付
+================================================== */
 
-function getToday() {
+function today() {
 
     const d = new Date();
 
@@ -608,26 +1096,88 @@ function getToday() {
 }
 
 
-/* =========================
-   1日1回チェック
-========================= */
+/* ==================================================
+   今日引いたか
+================================================== */
 
-function alreadyDrawnToday() {
+function alreadyDrawn() {
 
-    return data.lastDrawDate === getToday();
+    return data.lastDrawDate === today();
 
 }
 
 
-/* =========================
-   おみくじを引く
-========================= */
+/* ==================================================
+   ページ切り替え
+================================================== */
+
+function showPage(id) {
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
+
+            screen.classList.add("hidden");
+
+        });
+
+
+    document
+        .getElementById(id)
+        .classList.remove("hidden");
+
+
+    if (id === "bookScreen") {
+
+        updateBook();
+
+    }
+
+
+    if (id === "missionScreen") {
+
+        updateMissions();
+
+    }
+
+}
+
+
+/* ==================================================
+   ガチャ演出
+================================================== */
+
+function gachaAnimation(callback) {
+
+    const effect =
+        document.getElementById("gachaEffect");
+
+
+    effect.style.display = "flex";
+
+
+    setTimeout(() => {
+
+        effect.style.display = "none";
+
+        callback();
+
+    }, 1200);
+
+}
+
+
+/* ==================================================
+   おみくじ
+================================================== */
 
 function drawOmikuji() {
 
-    if (alreadyDrawnToday()) {
+    if (alreadyDrawn()) {
 
-        alert("今日はもうおみくじを引いています！\nまた明日引いてください🎴");
+        alert(
+            "今日はもうおみくじを引いています！\nまた明日引いてください🎴"
+        );
 
         return;
 
@@ -635,474 +1185,226 @@ function drawOmikuji() {
 
 
     const result =
-        omikuji[Math.floor(Math.random() * omikuji.length)];
+        omikuji[
+            Math.floor(
+                Math.random() * omikuji.length
+            )
+        ];
 
 
-    data.lastDrawDate = getToday();
+    data.lastDrawDate = today();
 
     data.drawCount++;
-
-
-    /* コイン獲得 */
 
     data.coins += result.coins;
 
 
-    /* 図鑑登録 */
+    if (
+        !data.collected.includes(
+            result.name
+        )
+    ) {
 
-    if (!data.collected.includes(result.name)) {
-
-        data.collected.push(result.name);
-
-    }
-
-
-    /* 画面表示 */
-
-    document.getElementById("result").style.display = "block";
-
-    document.getElementById("resultName").textContent =
-        result.name;
-
-    document.getElementById("resultText").textContent =
-        result.text;
-
-    document.getElementById("resultCoins").textContent =
-        result.coins;
-
-
-    /* 特別演出 */
-
-    if (result.type === "super") {
-
-        document.getElementById("resultName").style.color = "#d89b00";
-
-    } else if (result.type === "unique") {
-
-        document.getElementById("resultName").style.color = "#7a42d1";
-
-    } else if (result.name === "大吉") {
-
-        document.getElementById("resultName").style.color = "#d33";
-
-    } else {
-
-        document.getElementById("resultName").style.color = "#333";
-
-    }
-
-
-    /* ミッション */
-
-    let missionMessages = [];
-
-
-    if (!data.missions.first && data.drawCount >= 1) {
-
-        data.missions.first = true;
-
-        data.coins += 100;
-
-        missionMessages.push(
-            "🏆「おみくじを1回引く」達成！\n+100コイン"
+        data.collected.push(
+            result.name
         );
 
     }
 
 
-    if (!data.missions.ten && data.drawCount >= 10) {
+    /* ミッション進行 */
 
-        data.missions.ten = true;
-
-        data.coins += 1000;
-
-        missionMessages.push(
-            "🏆「おみくじを10回引く」達成！\n+1,000コイン"
+    data.missions.first.progress =
+        Math.min(
+            data.drawCount,
+            1
         );
 
-    }
 
-
-    if (!data.missions.thirty && data.drawCount >= 30) {
-
-        data.missions.thirty = true;
-
-        data.coins += 2000;
-
-        missionMessages.push(
-            "🏆「おみくじを30回引く」達成！\n+2,000コイン"
+    data.missions.ten.progress =
+        Math.min(
+            data.drawCount,
+            10
         );
 
-    }
 
+    data.missions.thirty.progress =
+        Math.min(
+            data.drawCount,
+            30
+        );
 
-    /* 超特大吉ミッション */
 
     if (
         result.name === "超特大吉"
-        &&
-        !data.missions.super
     ) {
 
-        data.missions.super = true;
-
-        data.counsy += 5000;
-
-        missionMessages.push(
-            "🌟「超特大吉を1回引く」達成！\n+5,000カウンシー"
-        );
+        data.missions.super.progress = 1;
 
     }
 
-
-    /* ユニークくじミッション */
 
     if (
         result.type === "unique"
-        &&
-        !data.missions.unique
     ) {
 
-        data.missions.unique = true;
-
-        data.counsy += 2000;
-
-        missionMessages.push(
-            "🎭「ユニークくじを1回引く」達成！\n+2,000カウンシー"
-        );
+        data.missions.unique.progress = 1;
 
     }
 
 
-    /* 全種類コンプリート */
-
-    if (
-        !data.missions.complete
-        &&
-        data.collected.length >= omikuji.length
-    ) {
-
-        data.missions.complete = true;
-
-        data.coins += 3000;
-
-        data.title = "おみくじ別班";
-
-        missionMessages.push(
-            "📚 全種類コンプリート！\n+3,000コイン\n🏅 称号「おみくじ別班」獲得！"
-        );
-
-    }
-
-
-    /* ミッション表示 */
-
-    const missionBox =
-        document.getElementById("missionReward");
-
-    if (missionMessages.length > 0) {
-
-        missionBox.classList.remove("hidden");
-
-        missionBox.textContent =
-            missionMessages.join("\n\n");
-
-    } else {
-
-        missionBox.classList.add("hidden");
-
-    }
+    data.missions.complete.progress =
+        data.collected.length;
 
 
     saveData();
 
-    updateDisplay();
 
-    updateButton();
+    gachaAnimation(
+        () => {
+
+            showResult(result);
+
+            updateAll();
+
+        }
+    );
 
 }
 
 
-/* =========================
-   画面更新
-========================= */
+/* ==================================================
+   結果表示
+================================================== */
 
-function updateDisplay() {
+function showResult(result) {
 
-    document.getElementById("coins").textContent =
-        data.coins.toLocaleString();
-
-
-    document.getElementById("drawCount").textContent =
-        data.drawCount;
+    const area =
+        document.getElementById(
+            "resultArea"
+        );
 
 
-    document.getElementById("bookCount").textContent =
-        data.collected.length;
+    area.classList.remove("hidden");
 
 
-    document.getElementById("totalCount").textContent =
-        omikuji.length;
+    document.getElementById(
+        "resultName"
+    ).textContent =
+        result.name;
 
 
-    document.getElementById("counsyArea").textContent =
-        "カウンシー："
-        +
-        data.counsy.toLocaleString();
+    document.getElementById(
+        "resultText"
+    ).textContent =
+        result.text;
 
 
-    if (data.title) {
+    document.getElementById(
+        "resultCoin"
+    ).textContent =
+        result.coins;
 
-        document.getElementById("titleArea").innerHTML =
-            "🏅 <span class='badge'>"
-            +
-            data.title
-            +
-            "</span>";
 
-    } else {
+    const name =
+        document.getElementById(
+            "resultName"
+        );
 
-        document.getElementById("titleArea").textContent =
-            "まだ称号を獲得していません。";
+
+    if (result.type === "super") {
+
+        name.style.color = "#d59a00";
 
     }
 
+    else if (
+        result.type === "unique"
+    ) {
 
-    updateMissions();
+        name.style.color = "#7541c9";
 
-    updateCollection();
+    }
 
-}
+    else if (
+        result.name === "大吉"
+    ) {
 
+        name.style.color = "#d93636";
 
-/* =========================
-   ミッション表示
-========================= */
+    }
 
-function updateMissions() {
+    else {
 
-    const box =
-        document.getElementById("missions");
+        name.style.color = "#333";
 
-
-    const missions = [
-
-        {
-            done: data.missions.first,
-            title: "おみくじを1回引く",
-            reward: "100コイン",
-            progress: Math.min(data.drawCount, 1),
-            max: 1
-        },
-
-        {
-            done: data.missions.ten,
-            title: "おみくじを10回引く",
-            reward: "1,000コイン",
-            progress: Math.min(data.drawCount, 10),
-            max: 10
-        },
-
-        {
-            done: data.missions.thirty,
-            title: "おみくじを30回引く",
-            reward: "2,000コイン",
-            progress: Math.min(data.drawCount, 30),
-            max: 30
-        },
-
-        {
-            done: data.missions.super,
-            title: "超特大吉を1枚引く",
-            reward: "5,000カウンシー",
-            progress: data.missions.super ? 1 : 0,
-            max: 1
-        },
-
-        {
-            done: data.missions.unique,
-            title: "ユニークくじを1枚引く",
-            reward: "2,000カウンシー",
-            progress: data.missions.unique ? 1 : 0,
-            max: 1
-        },
-
-        {
-            done: data.missions.complete,
-            title: "全種類コンプリート",
-            reward: "3,000コイン＋称号「おみくじ別班」",
-            progress: data.collected.length,
-            max: omikuji.length
-        }
-
-    ];
-
-
-    box.innerHTML = "";
-
-
-    missions.forEach(m => {
-
-        const div =
-            document.createElement("div");
-
-        div.className =
-            "mission"
-            +
-            (m.done ? " done" : "");
-
-
-        const percent =
-            Math.min(
-                100,
-                (m.progress / m.max) * 100
-            );
-
-
-        div.innerHTML = `
-
-            <div style="width:100%">
-
-                <div class="mission-title">
-
-                    ${m.done ? "✅" : "⬜"}
-                    ${m.title}
-
-                </div>
-
-                <div class="progress">
-
-                    <div
-                        class="progress-inner"
-                        style="width:${percent}%">
-                    </div>
-
-                </div>
-
-                <small>
-                    ${m.progress} / ${m.max}
-                </small>
-
-            </div>
-
-            <div class="mission-reward">
-
-                ${m.reward}
-
-            </div>
-
-        `;
-
-
-        box.appendChild(div);
-
-    });
+    }
 
 }
 
 
-/* =========================
-   図鑑
-========================= */
+/* ==================================================
+   コイン
+================================================== */
 
-function updateCollection() {
+function updateCoin() {
 
-    const box =
-        document.getElementById("collection");
-
-
-    box.innerHTML = "";
-
-
-    omikuji.forEach(item => {
-
-        const unlocked =
-            data.collected.includes(item.name);
-
-
-        const div =
-            document.createElement("div");
-
-
-        div.className =
-            "book-item "
-            +
-            (unlocked
-                ? "unlocked"
-                : "locked");
-
-
-        if (unlocked) {
-
-            div.innerHTML = `
-
-                <strong>🎴 ${item.name}</strong>
-
-                <br>
-
-                <small>
-                    ${item.text}
-                </small>
-
-            `;
-
-        } else {
-
-            div.innerHTML = `
-
-                <strong>❓ ???</strong>
-
-                <br>
-
-                <small>
-                    未獲得
-                </small>
-
-            `;
-
-        }
-
-
-        box.appendChild(div);
-
-    });
+    document.getElementById(
+        "coinDisplay"
+    ).textContent =
+        data.coins.toLocaleString();
 
 }
 
 
-/* =========================
-   ボタン状態
-========================= */
+/* ==================================================
+   1日1回表示
+================================================== */
 
-function updateButton() {
+function updateDaily() {
 
     const button =
-        document.getElementById("drawButton");
+        document.getElementById(
+            "drawButton"
+        );
 
-    const notice =
-        document.getElementById("dailyNotice");
+
+    const message =
+        document.getElementById(
+            "dailyMessage"
+        );
 
 
-    if (alreadyDrawnToday()) {
+    if (alreadyDrawn()) {
 
         button.disabled = true;
+
+        button.style.background =
+            "#999";
+
 
         button.textContent =
             "🌙 また明日引いてください";
 
 
-        notice.textContent =
-            "今日はもうおみくじを引きました。";
+        message.textContent =
+            "今日はもう引いています。";
 
-    } else {
+    }
+
+    else {
 
         button.disabled = false;
+
+        button.style.background =
+            "#d93636";
+
 
         button.textContent =
             "🎴 おみくじを引く";
 
 
-        notice.textContent =
+        message.textContent =
             "今日はまだ引いていません！";
 
     }
@@ -1110,37 +1412,464 @@ function updateButton() {
 }
 
 
-/* =========================
-   テスト用リセット
-========================= */
+/* ==================================================
+   図鑑
+================================================== */
 
-function resetData() {
+function updateBook() {
 
-    const answer =
-        confirm(
-            "本当にデータをリセットしますか？\n\n"
-            +
-            "コイン・回数・図鑑・ミッションが全部消えます。"
+    document.getElementById(
+        "bookProgress"
+    ).textContent =
+        data.collected.length;
+
+
+    document.getElementById(
+        "bookTotal"
+    ).textContent =
+        omikuji.length;
+
+
+    const grid =
+        document.getElementById(
+            "bookGrid"
         );
 
 
-    if (!answer) return;
+    grid.innerHTML = "";
 
 
-    localStorage.removeItem("omikujiData");
+    omikuji.forEach(item => {
 
-    location.reload();
+        const unlocked =
+            data.collected.includes(
+                item.name
+            );
+
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "bookCard "
+            +
+            (
+                unlocked
+                    ? "unlocked"
+                    : "locked"
+            );
+
+
+        if (unlocked) {
+
+            card.innerHTML = `
+
+                <div class="bookName">
+                    🎴 ${item.name}
+                </div>
+
+                <div class="bookText">
+                    ${item.text}
+                </div>
+
+            `;
+
+        }
+
+        else {
+
+            card.innerHTML = `
+
+                <div class="bookName">
+                    ❓？？？
+                </div>
+
+                <div>
+                    まだ引いていません
+                </div>
+
+            `;
+
+        }
+
+
+        grid.appendChild(card);
+
+    });
 
 }
 
 
-/* =========================
-   起動
-========================= */
+/* ==================================================
+   ミッション
+================================================== */
 
-updateDisplay();
+function updateMissions() {
 
-updateButton();
+    const list =
+        document.getElementById(
+            "missionList"
+        );
+
+
+    const missions = [
+
+        {
+            id: "first",
+
+            title:
+                "おみくじを1回引く",
+
+            reward:
+                "100コイン",
+
+            max: 1
+        },
+
+        {
+            id: "ten",
+
+            title:
+                "おみくじを10回引く",
+
+            reward:
+                "1,000コイン",
+
+            max: 10
+        },
+
+        {
+            id: "thirty",
+
+            title:
+                "おみくじを30回引く",
+
+            reward:
+                "2,000コイン",
+
+            max: 30
+        },
+
+        {
+            id: "super",
+
+            title:
+                "超特大吉を1枚引く",
+
+            reward:
+                "5,000カウンシー",
+
+            max: 1
+        },
+
+        {
+            id: "unique",
+
+            title:
+                "ユニークくじを1枚引く",
+
+            reward:
+                "2,000カウンシー",
+
+            max: 1
+        },
+
+        {
+            id: "complete",
+
+            title:
+                "おみくじを全種類コンプリートする",
+
+            reward:
+                "3,000コイン＋称号「おみくじ別班」",
+
+            max:
+                omikuji.length
+        }
+
+    ];
+
+
+    list.innerHTML = "";
+
+
+    missions.forEach(mission => {
+
+        const current =
+            data.missions[
+                mission.id
+            ].progress;
+
+
+        const claimed =
+            data.missions[
+                mission.id
+            ].claimed;
+
+
+        const completed =
+            current >= mission.max;
+
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "missionCard "
+            +
+            (
+                completed
+                    ? "completed"
+                    : ""
+            );
+
+
+        const left =
+            document.createElement(
+                "div"
+            );
+
+
+        left.innerHTML = `
+
+            <div class="missionTitle">
+
+                ${
+                    completed
+                        ? "✅"
+                        : "⬜"
+                }
+
+                ${mission.title}
+
+            </div>
+
+            <div>
+
+                進行：
+                ${Math.min(
+                    current,
+                    mission.max
+                )}
+                /
+                ${mission.max}
+
+            </div>
+
+            <div class="missionReward">
+
+                🎁 報酬：
+                ${mission.reward}
+
+            </div>
+
+        `;
+
+
+        card.appendChild(left);
+
+
+        if (claimed) {
+
+            const status =
+                document.createElement(
+                    "div"
+                );
+
+
+            status.className =
+                "statusText";
+
+
+            status.textContent =
+                "受け取り済み";
+
+
+            card.appendChild(
+                status
+            );
+
+        }
+
+        else if (completed) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "receiveButton";
+
+
+            button.textContent =
+                "受け取る";
+
+
+            button.onclick =
+                () => {
+
+                    claimMission(
+                        mission.id
+                    );
+
+                };
+
+
+            card.appendChild(
+                button
+            );
+
+        }
+
+        else {
+
+            const status =
+                document.createElement(
+                    "div"
+                );
+
+
+            status.className =
+                "statusText";
+
+
+            status.textContent =
+                "未達成";
+
+
+            card.appendChild(
+                status
+            );
+
+        }
+
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+/* ==================================================
+   ミッション報酬を受け取る
+================================================== */
+
+function claimMission(id) {
+
+    const mission =
+        data.missions[id];
+
+
+    if (mission.claimed) {
+
+        return;
+
+    }
+
+
+    if (id === "first") {
+
+        data.coins += 100;
+
+    }
+
+
+    else if (id === "ten") {
+
+        data.coins += 1000;
+
+    }
+
+
+    else if (id === "thirty") {
+
+        data.coins += 2000;
+
+    }
+
+
+    else if (id === "super") {
+
+        /*
+          カウンシーは
+          サイト内では保存だけします。
+          表示欄は今回削除しています。
+        */
+
+        alert(
+            "超特大吉ミッション達成！\n5,000カウンシー獲得！"
+        );
+
+    }
+
+
+    else if (id === "unique") {
+
+        alert(
+            "ユニークくじミッション達成！\n2,000カウンシー獲得！"
+        );
+
+    }
+
+
+    else if (id === "complete") {
+
+        data.coins += 3000;
+
+        alert(
+            "全種類コンプリート！\n"
+            +
+            "3,000コイン獲得！\n\n"
+            +
+            "🏅 称号「おみくじ別班」を獲得しました！"
+        );
+
+    }
+
+
+    mission.claimed = true;
+
+
+    saveData();
+
+    updateAll();
+
+    updateMissions();
+
+}
+
+
+/* ==================================================
+   全体更新
+================================================== */
+
+function updateAll() {
+
+    updateCoin();
+
+    updateDaily();
+
+    updateBook();
+
+    updateMissions();
+
+}
+
+
+/* ==================================================
+   初期化
+================================================== */
+
+updateAll();
 
 </script>
 
