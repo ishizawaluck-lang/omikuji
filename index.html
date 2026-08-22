@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>OMIKUJI</title>
+<title>おみくじ</title>
 
 <style>
-
 *{
     box-sizing:border-box;
 }
@@ -19,22 +17,14 @@ html,body{
 }
 
 body{
-    font-family:
-        "Yu Gothic",
-        "Hiragino Kaku Gothic ProN",
-        sans-serif;
-
+    font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",sans-serif;
     color:#fff;
-
-    background:
-        radial-gradient(
-            circle at 50% 20%,
-            #24304d 0%,
-            #0b1020 35%,
-            #03050b 100%
-        );
-
     min-height:100vh;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(64,93,180,.20),transparent 28%),
+        radial-gradient(circle at 80% 25%,rgba(172,108,255,.14),transparent 25%),
+        radial-gradient(circle at 50% 100%,rgba(44,127,201,.12),transparent 30%),
+        linear-gradient(135deg,#030611,#0a1020 50%,#02040a);
 }
 
 button{
@@ -50,118 +40,73 @@ button{
     display:block;
 }
 
-
-/* ================================
-   HOME
-================================ */
-
 .home{
     min-height:100vh;
-
     display:flex;
     flex-direction:column;
     align-items:center;
-
-    padding:45px 20px 60px;
+    padding:60px 20px 70px;
 }
 
 .logo{
-    font-size:58px;
+    font-size:clamp(40px,7vw,68px);
     font-weight:900;
-
-    letter-spacing:12px;
-
+    letter-spacing:10px;
+    text-align:center;
     text-shadow:
-        0 0 10px rgba(255,255,255,.4),
-        0 0 35px rgba(120,180,255,.4);
+        0 0 15px rgba(255,255,255,.4),
+        0 0 45px rgba(111,153,255,.35);
 }
 
 .subtitle{
-    margin-top:5px;
-    margin-bottom:30px;
-
-    color:#aab5d0;
+    color:#aeb8d2;
+    margin:8px 0 30px;
     letter-spacing:3px;
+    text-align:center;
 }
 
-
-/* ================================
-   MAIN BOX
-================================ */
-
 .omikuji-box{
-    width:min(92%,600px);
-
+    position:relative;
+    width:min(94%,620px);
     padding:35px 25px;
-
-    border-radius:28px;
-
+    border-radius:30px;
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,.12),
-            rgba(255,255,255,.04)
+            rgba(255,255,255,.11),
+            rgba(255,255,255,.035)
         );
-
-    border:1px solid rgba(255,255,255,.14);
-
+    border:1px solid rgba(255,255,255,.13);
     box-shadow:
-        0 20px 70px rgba(0,0,0,.5),
-        inset 0 0 40px rgba(255,255,255,.03);
-
+        0 25px 80px rgba(0,0,0,.45),
+        inset 0 1px rgba(255,255,255,.12);
     text-align:center;
 }
 
 .omikuji-symbol{
-    font-size:95px;
-
-    filter:
-        drop-shadow(0 0 20px rgba(255,210,80,.5));
-
+    font-size:90px;
     margin-bottom:20px;
+    filter:drop-shadow(0 0 22px rgba(255,213,94,.35));
 }
-
-
-/* ================================
-   DRAW BUTTON
-================================ */
 
 .draw-button{
     width:100%;
-
-    padding:21px;
-
-    border:1px solid rgba(255,255,255,.25);
-
+    padding:20px;
+    border:1px solid rgba(255,255,255,.18);
     border-radius:18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #202d49,
-            #10182b
-        );
-
+    background:linear-gradient(135deg,#22345a,#10192e);
     color:#fff;
-
     font-size:21px;
     font-weight:900;
-
     letter-spacing:2px;
-
     cursor:pointer;
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,.4);
-
     transition:.2s;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
 }
 
 .draw-button:hover{
     transform:translateY(-3px);
-
-    box-shadow:
-        0 12px 40px rgba(100,160,255,.25);
+    box-shadow:0 15px 45px rgba(75,120,255,.22);
 }
 
 .draw-button:disabled{
@@ -170,400 +115,179 @@ button{
     transform:none;
 }
 
-
-/* ================================
-   CURRENCY
-================================ */
-
 .currency-area{
-    width:min(92%,600px);
-
-    display:flex;
+    width:min(94%,620px);
+    display:grid;
+    grid-template-columns:1fr 1fr;
     gap:12px;
-
     margin-top:18px;
 }
 
 .currency-box{
-    flex:1;
-
     padding:14px;
-
-    border-radius:15px;
-
-    background:rgba(255,255,255,.08);
-
-    border:1px solid rgba(255,255,255,.1);
-
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(255,255,255,.06);
     text-align:center;
 }
 
 .currency-title{
     font-size:12px;
-    color:#9eabc5;
+    color:#98a5c3;
+    letter-spacing:1px;
 }
 
 .currency-value{
     margin-top:4px;
-
-    font-size:23px;
+    font-size:24px;
     font-weight:900;
 }
 
-
-/* ================================
-   MENU BUTTON
-================================ */
-
 .home-buttons{
-    width:min(92%,600px);
-
+    width:min(94%,620px);
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
+    grid-template-columns:repeat(3,1fr);
     gap:12px;
-
     margin-top:20px;
 }
 
 .menu-button{
-    padding:18px 8px;
-
-    border:1px solid rgba(255,255,255,.12);
-
-    border-radius:17px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.12),
-            rgba(255,255,255,.04)
-        );
-
+    padding:17px 8px;
+    border:1px solid rgba(255,255,255,.11);
+    border-radius:16px;
+    background:rgba(255,255,255,.06);
     color:#fff;
-
-    font-weight:900;
-
     cursor:pointer;
-
+    font-weight:900;
     transition:.2s;
 }
 
 .menu-button:hover{
     transform:translateY(-3px);
-
-    background:
-        rgba(255,255,255,.16);
+    background:rgba(255,255,255,.10);
 }
 
-
-/* ================================
-   TEST
-================================ */
-
 .test-area{
-    width:min(92%,600px);
-
+    width:min(94%,620px);
     margin-top:22px;
 }
 
 .test-title{
+    color:#8793ae;
     text-align:center;
-
-    color:#8996b3;
-
     font-size:12px;
-
     letter-spacing:2px;
-
     margin-bottom:10px;
 }
 
 .test-buttons{
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:8px;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
 }
 
 .test-button{
     padding:12px 5px;
-
-    border:1px solid rgba(255,255,255,.1);
-
+    border:1px solid rgba(255,255,255,.08);
     border-radius:12px;
-
-    background:#11182a;
-
-    color:#d9e0f0;
-
+    background:#111829;
+    color:#dce3f5;
     cursor:pointer;
-
-    font-weight:bold;
 }
 
 .test-button:hover{
-    background:#1d2942;
+    background:#1b2943;
 }
-
-
-/* ================================
-   RESULT
-================================ */
 
 .result{
     display:none;
-
     margin-top:25px;
 }
 
 .result-card{
     padding:25px;
-
     border-radius:20px;
-
-    background:
-        rgba(255,255,255,.08);
-
-    border:
-        1px solid rgba(255,255,255,.15);
+    border:1px solid rgba(255,215,106,.3);
+    background:rgba(255,255,255,.06);
 }
 
 .result-name{
     font-size:36px;
-
     font-weight:900;
 }
 
 .result-text{
     margin-top:12px;
-
-    line-height:1.8;
-
-    color:#d7dcec;
+    line-height:1.85;
+    color:#d7dced;
+    white-space:pre-line;
 }
-
-
-/* ================================
-   PAGE
-================================ */
 
 .page{
     min-height:100vh;
-
     display:flex;
     flex-direction:column;
     align-items:center;
-
-    padding:80px 20px 40px;
+    padding:80px 20px 50px;
 }
 
 .page-title{
-    font-size:36px;
-
+    font-size:34px;
     font-weight:900;
-
     letter-spacing:4px;
-
     margin-bottom:25px;
+    text-align:center;
 }
-
-
-/* ================================
-   BACK
-================================ */
 
 .back{
     position:fixed;
-
     top:18px;
     left:18px;
-
     z-index:1000;
-
-    width:50px;
-    height:50px;
-
-    border:1px solid rgba(255,255,255,.2);
-
+    width:48px;
+    height:48px;
+    border:1px solid rgba(255,255,255,.18);
     border-radius:50%;
-
-    background:
-        rgba(5,8,15,.85);
-
+    background:rgba(4,7,14,.9);
     color:#fff;
-
-    font-size:25px;
-
+    font-size:24px;
     cursor:pointer;
 }
 
-
-/* ================================
-   COLLECTION
-================================ */
-
 .collection-grid{
-    width:min(95%,850px);
-
+    width:min(96%,900px);
     display:grid;
-
-    grid-template-columns:
-        repeat(auto-fit,minmax(150px,1fr));
-
+    grid-template-columns:repeat(auto-fit,minmax(165px,1fr));
     gap:12px;
 }
 
 .collection-item{
-    min-height:90px;
-
+    min-height:92px;
+    border:1px solid rgba(255,255,255,.10);
     border-radius:17px;
-
-    border:1px solid rgba(255,255,255,.1);
-
     padding:12px;
-
     font-weight:900;
-
     cursor:pointer;
-
     color:#fff;
 }
 
 .collection-item.obtained{
-    background:
-        linear-gradient(
-            145deg,
-            #273b68,
-            #111a32
-        );
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,.3);
+    background:linear-gradient(145deg,#263b68,#111a31);
 }
 
 .collection-item.locked{
-    background:#151a25;
-
-    color:#596176;
-
+    background:#141923;
+    color:#5d6575;
     cursor:not-allowed;
 }
 
-
-/* ================================
-   MODAL
-================================ */
-
-.modal-overlay{
-    position:fixed;
-
-    inset:0;
-
-    z-index:3000;
-
-    background:
-        rgba(0,0,0,.8);
-
-    display:none;
-
-    align-items:center;
-    justify-content:center;
-
-    padding:20px;
-}
-
-.modal-overlay.active{
-    display:flex;
-}
-
-.modal{
-    width:min(94%,600px);
-
-    max-height:90vh;
-
-    overflow:auto;
-
-    padding:28px;
-
-    border-radius:25px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #17213a,
-            #090d18
-        );
-
-    border:1px solid rgba(255,255,255,.15);
-
-    text-align:center;
-}
-
-.modal-title{
-    font-size:30px;
-
-    font-weight:900;
-}
-
-.modal-text{
-    margin:20px 0;
-
-    line-height:1.8;
-
-    color:#d6dced;
-}
-
-.action-button{
-    width:100%;
-
-    padding:15px;
-
-    margin-top:10px;
-
-    border:0;
-
-    border-radius:13px;
-
-    cursor:pointer;
-
-    font-size:16px;
-
-    font-weight:bold;
-}
-
-.primary{
-    background:#304b83;
-    color:#fff;
-}
-
-.secondary{
-    background:#252b39;
-    color:#fff;
-}
-
-
-/* ================================
-   MISSIONS
-================================ */
-
 .mission{
-    width:min(95%,700px);
-
+    width:min(96%,720px);
     padding:20px;
-
     margin-bottom:14px;
-
     border-radius:18px;
-
-    background:
-        rgba(255,255,255,.07);
-
-    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.10);
 }
 
 .mission h3{
@@ -572,184 +296,169 @@ button{
 
 .progress{
     height:10px;
-
-    background:#252a38;
-
+    background:#252b3a;
     border-radius:10px;
-
     overflow:hidden;
-
     margin:12px 0;
 }
 
 .progress-bar{
     height:100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #6c8fe8,
-            #a8c4ff
-        );
+    background:linear-gradient(90deg,#6c8fff,#b4cdff);
 }
 
 .reward-button{
+    margin-top:10px;
     padding:11px 18px;
-
     border:0;
-
     border-radius:10px;
-
     background:#304b83;
-
     color:#fff;
-
     cursor:pointer;
+    font-weight:bold;
 }
 
 .reward-button:disabled{
-    background:#333947;
-
-    color:#777f93;
-
+    background:#343a47;
+    color:#777f90;
     cursor:not-allowed;
 }
 
-
-/* ================================
-   SHOP
-================================ */
-
 .shop-box{
-    width:min(92%,600px);
-
+    width:min(94%,620px);
     min-height:320px;
-
     display:flex;
-
     align-items:center;
     justify-content:center;
-
     border-radius:25px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #18213a,
-            #090d18
-        );
-
+    background:linear-gradient(145deg,#17223b,#0a0e19);
     border:1px solid rgba(255,255,255,.12);
-
-    box-shadow:
-        0 15px 50px rgba(0,0,0,.4);
-
-    text-align:center;
 }
 
 .shop-coming{
-    font-size:40px;
-
+    font-size:38px;
     font-weight:900;
-
     letter-spacing:5px;
-
     color:#dce5ff;
 }
 
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    z-index:3000;
+    background:rgba(0,0,0,.80);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
 
-/* ================================
+.modal-overlay.active{
+    display:flex;
+}
+
+.modal{
+    width:min(94%,650px);
+    max-height:90vh;
+    overflow:auto;
+    padding:28px;
+    border-radius:25px;
+    background:linear-gradient(145deg,#17213a,#080c16);
+    border:1px solid rgba(255,255,255,.14);
+    text-align:center;
+}
+
+.modal-title{
+    font-size:30px;
+    font-weight:900;
+}
+
+.modal-text{
+    margin:20px 0;
+    line-height:1.9;
+    color:#d7dced;
+    white-space:pre-line;
+}
+
+.action-button{
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    border:0;
+    border-radius:13px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.primary{
+    background:#314e89;
+    color:#fff;
+}
+
+.secondary{
+    background:#242b3a;
+    color:#fff;
+}
+
+/* =====================
    EFFECT
-================================ */
+===================== */
 
 #effect{
     position:fixed;
-
     inset:0;
-
     z-index:9999;
-
     display:none;
-
     align-items:center;
     justify-content:center;
-
-    overflow:hidden;
-
     background:#000;
-}
-
-#effectGraphics{
-    position:absolute;
-
-    inset:0;
-
     overflow:hidden;
 }
 
 .effect-rays{
     position:absolute;
-
     width:180vmax;
     height:180vmax;
-
     left:50%;
     top:50%;
-
     transform:translate(-50%,-50%);
-
     background:
         repeating-conic-gradient(
             transparent 0deg 7deg,
-            rgba(255,220,100,.2) 8deg 11deg,
+            rgba(255,220,100,.18) 8deg 11deg,
             transparent 12deg 20deg
         );
-
-    animation:
-        rotate 12s linear infinite;
+    animation:rotate 12s linear infinite;
 }
 
 .effect-light{
     position:absolute;
-
     left:50%;
     top:50%;
-
     width:15vmin;
     height:15vmin;
-
     transform:translate(-50%,-50%);
-
     border-radius:50%;
-
     background:#fff;
-
     box-shadow:
         0 0 40px #fff,
         0 0 100px gold,
         0 0 220px gold;
-
     animation:pulse 3s infinite;
 }
 
 .effect-text{
     position:relative;
-
     z-index:5;
-
     color:#fff;
-
-    font-size:70px;
-
+    font-size:clamp(42px,8vw,90px);
     font-weight:900;
-
-    opacity:0;
-
     text-align:center;
-
     text-shadow:
         0 0 20px gold,
         0 0 50px #fff;
+    opacity:0;
 }
 
 .effect-text.show{
@@ -758,118 +467,66 @@ button{
 
 .skip{
     position:absolute;
-
     top:20px;
     right:20px;
-
     z-index:20;
-
     padding:12px 18px;
-
     border:1px solid rgba(255,255,255,.4);
-
     border-radius:12px;
-
-    background:
-        rgba(0,0,0,.7);
-
+    background:rgba(0,0,0,.7);
     color:#fff;
-
     cursor:pointer;
 }
 
-
-/* ================================
-   YOUTUBE
-================================ */
-
 #videoContainer{
     position:absolute;
-
     inset:0;
-
     display:none;
-
     align-items:center;
     justify-content:center;
-
     background:#000;
 }
 
 #youtubeFrame{
     width:min(90vw,900px);
-
     aspect-ratio:16/9;
-
     border:0;
 }
 
-
-/* ================================
-   ANIMATION
-================================ */
-
 @keyframes rotate{
-
     from{
-        transform:
-            translate(-50%,-50%)
-            rotate(0deg);
+        transform:translate(-50%,-50%) rotate(0deg);
     }
-
     to{
-        transform:
-            translate(-50%,-50%)
-            rotate(360deg);
+        transform:translate(-50%,-50%) rotate(360deg);
     }
-
 }
 
 @keyframes pulse{
-
     0%,100%{
-        transform:
-            translate(-50%,-50%)
-            scale(.4);
-
+        transform:translate(-50%,-50%) scale(.4);
         opacity:.25;
     }
-
     50%{
-        transform:
-            translate(-50%,-50%)
-            scale(2);
-
+        transform:translate(-50%,-50%) scale(2);
         opacity:1;
     }
-
 }
 
 @keyframes appear{
-
     from{
         transform:scale(.2);
         opacity:0;
+        filter:blur(18px);
     }
-
     to{
         transform:scale(1);
         opacity:1;
+        filter:blur(0);
     }
-
 }
 
-
-/* ================================
-   MOBILE
-================================ */
-
 @media(max-width:600px){
-
-    .logo{
-        font-size:40px;
-        letter-spacing:7px;
-    }
 
     .home-buttons{
         grid-template-columns:1fr;
@@ -880,25 +537,22 @@ button{
     }
 
     .currency-area{
-        flex-direction:column;
+        grid-template-columns:1fr;
     }
 
-    .effect-text{
-        font-size:43px;
+    .logo{
+        font-size:40px;
+        letter-spacing:7px;
     }
-
 }
-
 </style>
 </head>
 
-
 <body>
 
-
-<!-- =================================================
+<!-- =====================
      HOME
-================================================= -->
+===================== -->
 
 <div id="homeScreen" class="screen active">
 
@@ -909,9 +563,8 @@ OMIKUJI
 </div>
 
 <div class="subtitle">
-一日一回ではない。運が続く限り引ける。
+FATE AWAITS YOU
 </div>
-
 
 <div class="omikuji-box">
 
@@ -923,11 +576,8 @@ OMIKUJI
 id="drawButton"
 class="draw-button"
 onclick="drawRealOmikuji()">
-
 おみくじを引く
-
 </button>
-
 
 <div id="result" class="result">
 
@@ -949,15 +599,12 @@ class="result-text">
 
 </div>
 
-
-<!-- CURRENCY -->
-
 <div class="currency-area">
 
 <div class="currency-box">
 
 <div class="currency-title">
-OMIKUJI COIN
+COINS
 </div>
 
 <div
@@ -967,7 +614,6 @@ class="currency-value">
 </div>
 
 </div>
-
 
 <div class="currency-box">
 
@@ -985,39 +631,27 @@ class="currency-value">
 
 </div>
 
-
-<!-- MENU -->
-
 <div class="home-buttons">
 
 <button
 class="menu-button"
 onclick="openPage('collection')">
-
 📖 図鑑
-
 </button>
 
 <button
 class="menu-button"
 onclick="openPage('shop')">
-
-🏪 ショップ
-
+🛒 ショップ
 </button>
 
 <button
 class="menu-button"
 onclick="openPage('missions')">
-
 🎯 ミッション
-
 </button>
 
 </div>
-
-
-<!-- TEST -->
 
 <div class="test-area">
 
@@ -1029,20 +663,20 @@ TEST / 演出確認
 
 <button
 class="test-button"
-onclick="testRandom()">
-ランダム
+onclick="openEffectTest()">
+🎬 全演出
 </button>
 
 <button
 class="test-button"
 onclick="testGreat()">
-大吉
+✨ 大吉
 </button>
 
 <button
 class="test-button"
 onclick="testSuper()">
-超特大吉
+🌟 超特大吉
 </button>
 
 </div>
@@ -1050,13 +684,12 @@ onclick="testSuper()">
 </div>
 
 </div>
-
 </div>
 
 
-<!-- =================================================
+<!-- =====================
      COLLECTION
-================================================= -->
+===================== -->
 
 <div id="collectionScreen" class="screen">
 
@@ -1069,7 +702,7 @@ onclick="goHome()">
 </button>
 
 <div class="page-title">
-図鑑
+📖 おみくじ図鑑
 </div>
 
 <div
@@ -1078,13 +711,12 @@ class="collection-grid">
 </div>
 
 </div>
-
 </div>
 
 
-<!-- =================================================
+<!-- =====================
      MISSIONS
-================================================= -->
+===================== -->
 
 <div id="missionsScreen" class="screen">
 
@@ -1097,21 +729,18 @@ onclick="goHome()">
 </button>
 
 <div class="page-title">
-MISSIONS
+🎯 ミッション
 </div>
 
-<div
-id="missionList">
-</div>
+<div id="missionList"></div>
 
 </div>
-
 </div>
 
 
-<!-- =================================================
+<!-- =====================
      SHOP
-================================================= -->
+===================== -->
 
 <div id="shopScreen" class="screen">
 
@@ -1124,25 +753,24 @@ onclick="goHome()">
 </button>
 
 <div class="page-title">
-SHOP
+🛒 ショップ
 </div>
 
 <div class="shop-box">
 
 <div class="shop-coming">
-COMING SOON
+近日公開
 </div>
 
 </div>
 
 </div>
-
 </div>
 
 
-<!-- =================================================
-     DETAIL MODAL
-================================================= -->
+<!-- =====================
+     DETAIL
+===================== -->
 
 <div
 id="detailOverlay"
@@ -1163,27 +791,56 @@ class="modal-text">
 <button
 class="action-button primary"
 onclick="watchCollectionEffect()">
-
 🎬 演出を見る
-
 </button>
 
 <button
 class="action-button secondary"
 onclick="closeDetail()">
-
 閉じる
-
 </button>
 
 </div>
-
 </div>
 
 
-<!-- =================================================
+<!-- =====================
+     EFFECT TEST
+===================== -->
+
+<div
+id="effectTestOverlay"
+class="modal-overlay">
+
+<div class="modal">
+
+<div class="modal-title">
+🎬 演出テスト
+</div>
+
+<div class="modal-text">
+見たい演出を選んでください。
+</div>
+
+<div
+id="effectTestList"
+class="collection-grid"
+style="width:100%;">
+</div>
+
+<button
+class="action-button secondary"
+onclick="closeEffectTest()">
+戻る
+</button>
+
+</div>
+</div>
+
+
+<!-- =====================
      EFFECT
-================================================= -->
+===================== -->
 
 <div id="effect">
 
@@ -1196,9 +853,7 @@ id="effectGraphics">
 
 </div>
 
-
-<div
-id="videoContainer">
+<div id="videoContainer">
 
 <iframe
 id="youtubeFrame"
@@ -1208,26 +863,21 @@ allowfullscreen>
 
 </div>
 
-
 <div
 id="effectText"
 class="effect-text">
 </div>
 
-
 <button
 class="skip"
 onclick="skipEffect()">
-
 SKIP
-
 </button>
 
 </div>
 
 
 <script>
-
 
 /* =====================================================
    おみくじデータ
@@ -1236,311 +886,287 @@ SKIP
 const omikuji = [
 
 {
-name:"小吉",
-text:"割りばしがうまく割れるかも",
-type:"normal"
+    name:"小吉",
+    text:"割りばしがうまく割れるかも",
+    type:"normal"
 },
 
 {
-name:"中吉",
-text:"茶柱立つかも",
-type:"normal"
+    name:"中吉",
+    text:"茶柱立つかも",
+    type:"normal"
 },
 
 {
-name:"吉",
-text:"自分の思いついたことやってみたら成功するかも",
-type:"normal"
+    name:"吉",
+    text:"自分の思いついたことやってみたら成功するかも",
+    type:"normal"
 },
 
 {
-name:"半吉",
-text:"ワンチャン褒められるよ",
-type:"normal"
+    name:"半吉",
+    text:"ワンチャン褒められるよ",
+    type:"normal"
 },
 
 {
-name:"末吉",
-text:"まあ別に何も起こらない",
-type:"normal"
+    name:"末吉",
+    text:"まあ別に何も起こらない",
+    type:"normal"
 },
 
 {
-name:"末小吉",
-text:"自分の発言には気を付けよう　ラッキーアイテム：思いやりの精神",
-type:"normal"
+    name:"末小吉",
+    text:"自分の発言には気を付けよう　ラッキーアイテム：思いやりの精神",
+    type:"normal"
 },
 
 {
-name:"凶",
-text:"一回はこけるよ　ラッキーアイテム：危機感",
-type:"normal"
+    name:"凶",
+    text:"一回はこけるよ　ラッキーアイテム：危機感",
+    type:"normal"
 },
 
 {
-name:"小凶",
-text:"立ち眩みすることがあるよ　ラッキーアイテム：健康",
-type:"normal"
+    name:"小凶",
+    text:"立ち眩みすることがあるよ　ラッキーアイテム：健康",
+    type:"normal"
 },
 
 {
-name:"半凶",
-text:"冷蔵庫を開けたら物が何個か落ちてきます　ラッキーアイテム：整理整頓",
-type:"normal"
+    name:"半凶",
+    text:"冷蔵庫を開けたら物が何個か落ちてきます　ラッキーアイテム：整理整頓",
+    type:"normal"
 },
 
 {
-name:"末凶",
-text:"なにかが机の間に落ちていやな気分になります　ラッキーアイテム：長い棒",
-type:"normal"
+    name:"末凶",
+    text:"なにかが机の間に落ちていやな気分になります　ラッキーアイテム：長い棒",
+    type:"normal"
 },
 
 {
-name:"大凶",
-text:"今日は少し注意して過ごそう　ラッキーアイテム：聖書",
-type:"normal"
+    name:"大凶",
+    text:"今日は少し注意して過ごそう　ラッキーアイテム：聖書",
+    type:"normal"
 },
 
-
-/* =====================
-   UNIQUE
-===================== */
+{
+    name:"狩野英孝吉",
+    text:"ライトが割れました　ラッキーアイテム：如意棒",
+    type:"unique",
+    video:{
+        platform:"youtube",
+        id:"YwE3kWmbpm4",
+        start:373,
+        end:411
+    }
+},
 
 {
-name:"狩野英孝吉",
-text:"ライトが割れました　ラッキーアイテム：如意棒",
-type:"unique",
+    name:"ようごん吉",
+    text:"ようよう白く成りゆく山際　ラッキーアイテム：清少納GON",
+    type:"unique",
+    video:{
+        platform:"youtube",
+        id:"gLWqgEgnKuk",
+        start:0,
+        end:3
+    }
+},
 
-video:{
-platform:"youtube",
-id:"YwE3kWmbpm4",
-start:373,
-end:411
+{
+    name:"ディオ吉",
+    text:"お前は今まで食ってきたパンの枚数を覚えているのか　ラッキーアイテム：記憶力/勇気",
+    type:"unique",
+    video:{
+        platform:"youtube",
+        id:"OX-b24uyXUE",
+        full:true
+    }
+},
+
+{
+    name:"バイオ吉",
+    text:"お前も今日から家族だ　ラッキーアイテム：好き嫌いしない口",
+    type:"unique",
+    video:{
+        platform:"youtube",
+        id:"DVAbjoExTHo",
+        start:0,
+        end:2
+    }
+},
+
+{
+    name:"真島吉",
+    text:"そこの桐生ちゃん止まりなさい　ラッキーアイテム：桐生一馬",
+    type:"unique",
+    video:{
+        platform:"youtube",
+        id:"f2oaie25UMU",
+        start:0,
+        end:15
+    }
+},
+
+{
+    name:"鶏吉",
+    text:"do you know what time it is?　ラッキーアイテム：トランシーバー",
+    type:"unique",
+    video:{
+        platform:"youtube",
+        id:"B4MWD8hEZ9g",
+        full:true
+    }
+},
+
+{
+    name:"レヴォリューション吉",
+    text:"勢いのある一日になりそう！　ラッキーアイテム：松岡修造",
+    type:"unique",
+    video:{
+        platform:"youtube",
+        id:"Lz24PqZkF2s",
+        start:0,
+        end:86
+    }
+},
+
+{
+    name:"丸亀吉",
+    text:"今日はかなり荒れ模様。落ち着いて行動しよう　ラッキーアイテム：うどん",
+    type:"unique",
+    video:{
+        platform:"tiktok",
+        id:"7609227181666979079"
+    }
+},
+
+{
+    name:"丸亀吉２",
+    text:"今日は何事にも冷静に対応しよう　ラッキーアイテム：手打ち麺",
+    type:"unique",
+    video:{
+        platform:"tiktok",
+        id:"7653401503914315026"
+    }
+},
+
+{
+    name:"布団ちゃん吉",
+    text:"～君と夏の終わり～　ここの鶏皮ってカリカリ？　ラッキーアイテム：放屁",
+    type:"unique",
+    video:{
+        platform:"youtube",
+        id:"wcqypcm5MZ0",
+        full:true
+    }
+},
+
+{
+    name:"陣内智則吉",
+    text:"笑いのニューウェーブを感じる一日！　ラッキーアイテム：ノリのよさ",
+    type:"unique",
+    video:{
+        platform:"tiktok",
+        id:"7616618149386964244"
+    }
+},
+
+{
+    name:"GON吉",
+    text:"お前！それは犬のほうを助けなきゃダメだろ！！　ラッキーアイテム：猫",
+    type:"unique",
+    video:{
+        platform:"tiktok",
+        id:"7632964352496160020",
+        audioOnly:true
+    }
+},
+
+{
+    name:"葉吉",
+    text:"おっけー無理しね　ラッキーアイテム：あきらめも肝心",
+    type:"unique",
+    video:{
+        platform:"youtube",
+        id:"zsd4A1MrEec",
+        start:1010,
+        end:1011
+    }
+},
+
+{
+    name:"乙骨吉",
+    text:"よかったーーーwwwwww　ラッキーアイテム：安心",
+    type:"unique",
+    video:{
+        platform:"youtube",
+        id:"KIaKU_lv25I",
+        full:true
+    }
+},
+
+{
+    name:"偽骨吉",
+    text:"今日はゆるくいこう　ラッキーアイテム：ゆるゆる",
+    type:"unique",
+    video:{
+        platform:"tiktok",
+        id:"7637070073588485396"
+    }
+},
+
+{
+    name:"クラピカ吉",
+    text:"ジャッチメントチェーン　ラッキーアイテム：クルタ族の目",
+    type:"unique",
+    video:{
+        platform:"youtube",
+        id:"YrCGQ_WLlTY",
+        start:0,
+        end:3
+    }
+},
+
+{
+    name:"偽ピカ吉",
+    text:"エンペラーペンギンタイム　ラッキーアイテム：ぺんぎん",
+    type:"unique",
+    video:{
+        platform:"tiktok",
+        id:"7592179888384183559",
+        audioOnly:true
+    }
+},
+
+{
+    name:"MASAAKI吉",
+    text:"吉を見たその日から運命を感じたんだ　ラッキーアイテム：探索力",
+    type:"unique",
+    video:{
+        platform:"youtube",
+        id:"--fpIS91cwA",
+        full:true
+    }
+},
+
+{
+    name:"大吉",
+    text:"大体のことがうまくいく　ラッキーアイテム：チームワーク",
+    type:"great"
+},
+
+{
+    name:"超特大吉",
+    text:"誰かからお賽銭がもらえるかも　ラッキーアイテム：我慢",
+    type:"super"
 }
-},
 
-{
-name:"ようごん吉",
-text:"ようよう白く成りゆく山際　ラッキーアイテム：清少納GON",
-type:"unique",
-
-video:{
-platform:"youtube",
-id:"gLWqgEgnKuk",
-start:0,
-end:3
-}
-},
-
-{
-name:"ディオ吉",
-text:"お前は今まで食ってきたパンの枚数を覚えているのか　ラッキーアイテム：記憶力/勇気",
-type:"unique",
-
-video:{
-platform:"youtube",
-id:"OX-b24uyXUE",
-full:true
-}
-},
-
-{
-name:"バイオ吉",
-text:"お前も今日から家族だ　ラッキーアイテム：好き嫌いしない口",
-type:"unique",
-
-video:{
-platform:"youtube",
-id:"DVAbjoExTHo",
-start:0,
-end:2
-}
-},
-
-{
-name:"真島吉",
-text:"そこの桐生ちゃん止まりなさい　ラッキーアイテム：桐生一馬",
-type:"unique",
-
-video:{
-platform:"youtube",
-id:"f2oaie25UMU",
-start:0,
-end:15
-}
-},
-
-{
-name:"鶏吉",
-text:"do you know what time it is?　ラッキーアイテム：トランシーバー",
-type:"unique",
-
-video:{
-platform:"youtube",
-id:"B4MWD8hEZ9g",
-full:true
-}
-},
-
-{
-name:"レヴォリューション吉",
-text:"勢いのある一日になりそう！　ラッキーアイテム：松岡修造",
-type:"unique",
-
-video:{
-platform:"youtube",
-id:"Lz24PqZkF2s",
-start:0,
-end:86
-}
-},
-
-{
-name:"丸亀吉",
-text:"今日はかなり荒れ模様。落ち着いて行動しよう　ラッキーアイテム：うどん",
-type:"unique",
-
-video:{
-platform:"tiktok",
-id:"7609227181666979079"
-}
-},
-
-{
-name:"丸亀吉２",
-text:"今日は何事にも冷静に対応しよう　ラッキーアイテム：手打ち麺",
-type:"unique",
-
-video:{
-platform:"tiktok",
-id:"7653401503914315026"
-}
-},
-
-{
-name:"布団ちゃん吉",
-text:"～君と夏の終わり～　ここの鶏皮ってカリカリ？　ラッキーアイテム：放屁",
-type:"unique",
-
-video:{
-platform:"youtube",
-id:"wcqypcm5MZ0",
-full:true
-}
-},
-
-{
-name:"陣内智則吉",
-text:"笑いのニューウェーブを感じる一日！　ラッキーアイテム：ノリのよさ",
-type:"unique",
-
-video:{
-platform:"tiktok",
-id:"7616618149386964244"
-}
-},
-
-{
-name:"GON吉",
-text:"お前！それは犬のほうを助けなきゃダメだろ！！　ラッキーアイテム：猫",
-type:"unique",
-
-video:{
-platform:"tiktok",
-id:"7632964352496160020",
-audioOnly:true
-}
-},
-
-{
-name:"葉吉",
-text:"おっけー無理しね　ラッキーアイテム：あきらめも肝心",
-type:"unique",
-
-video:{
-platform:"youtube",
-id:"zsd4A1MrEec",
-start:1010,
-end:1011
-}
-},
-
-{
-name:"乙骨吉",
-text:"よかったーーーwwwwww　ラッキーアイテム：安心",
-type:"unique",
-
-video:{
-platform:"youtube",
-id:"KIaKU_lv25I",
-full:true
-}
-},
-
-{
-name:"偽骨吉",
-text:"今日はゆるくいこう　ラッキーアイテム：ゆるゆる",
-type:"unique",
-
-video:{
-platform:"tiktok",
-id:"7637070073580485396"
-}
-},
-
-{
-name:"クラピカ吉",
-text:"ジャッチメントチェーン　ラッキーアイテム：クルタ族の目",
-type:"unique",
-
-video:{
-platform:"youtube",
-id:"YrCGQ_WLlTY",
-start:0,
-end:3
-}
-},
-
-{
-name:"偽ピカ吉",
-text:"エンペラーペンギンタイム　ラッキーアイテム：ぺんぎん",
-type:"unique",
-
-video:{
-platform:"tiktok",
-id:"7592179888384183559",
-audioOnly:true
-}
-},
-
-{
-name:"MASAAKI吉",
-text:"吉を見たその日から運命を感じたんだ　ラッキーアイテム：探索力",
-type:"unique",
-
-video:{
-platform:"youtube",
-id:"--fpIS91cwA",
-full:true
-}
-},
-
-
-/* =====================
-   RARE
-===================== */
-
-{
-name:"大吉",
-text:"大体のことがうまくいく　ラッキーアイテム：チームワーク",
-type:"great"
-},
-
-{
-name:"超特大吉",
-text:"誰かからお賽銭がもらえるかも　ラッキーアイテム：我慢",
-type:"super"
-}
+/* 追加の「？？？」5種類は、
+   具体的な名前・内容がまだ確定していないため
+   勝手に変更しないよう、この版では未追加です。 */
 
 ];
 
@@ -1549,38 +1175,42 @@ type:"super"
    保存データ
 ===================================================== */
 
-let data =
-JSON.parse(
-localStorage.getItem("omikujiData") || "{}"
-);
+let data;
+
+try{
+
+    data=
+        JSON.parse(
+            localStorage.getItem("omikujiData") || "{}"
+        );
+
+}catch(error){
+
+    data={};
+
+}
 
 
 if(typeof data.coins !== "number")
-data.coins=0;
-
+    data.coins=0;
 
 if(typeof data.freeDraws !== "number")
-data.freeDraws=0;
-
+    data.freeDraws=0;
 
 if(typeof data.lastLogin !== "string")
-data.lastLogin="";
-
+    data.lastLogin="";
 
 if(!Array.isArray(data.obtained))
-data.obtained=[];
-
+    data.obtained=[];
 
 if(typeof data.drawCount !== "number")
-data.drawCount=0;
-
+    data.drawCount=0;
 
 if(!data.missions)
-data.missions={};
-
+    data.missions={};
 
 if(!data.claimed)
-data.claimed={};
+    data.claimed={};
 
 
 let selectedResult=null;
@@ -1594,10 +1224,10 @@ let effectTimer=null;
 
 function save(){
 
-localStorage.setItem(
-"omikujiData",
-JSON.stringify(data)
-);
+    localStorage.setItem(
+        "omikujiData",
+        JSON.stringify(data)
+    );
 
 }
 
@@ -1608,13 +1238,13 @@ JSON.stringify(data)
 
 function today(){
 
-const d=new Date();
+    const d=new Date();
 
-return d.getFullYear()
-+"-"
-+String(d.getMonth()+1).padStart(2,"0")
-+"-"
-+String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()
+        + "-"
+        + String(d.getMonth()+1).padStart(2,"0")
+        + "-"
+        + String(d.getDate()).padStart(2,"0");
 
 }
 
@@ -1625,22 +1255,22 @@ return d.getFullYear()
 
 function loginBonus(){
 
-const date=today();
+    const date=today();
 
-if(data.lastLogin!==date){
+    if(data.lastLogin!==date){
 
-data.lastLogin=date;
+        data.lastLogin=date;
 
-data.freeDraws++;
+        data.freeDraws++;
 
-save();
+        save();
 
-alert(
-"🎁 LOGIN BONUS\n\n"+
-"無料おみくじを1回獲得しました！"
-);
+        alert(
+            "🎁 ログインボーナス\n\n"+
+            "無料おみくじを1回獲得しました！"
+        );
 
-}
+    }
 
 }
 
@@ -1651,62 +1281,67 @@ alert(
 
 function openPage(page){
 
-document
-.querySelectorAll(".screen")
-.forEach(x=>{
-x.classList.remove("active");
-});
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen=>{
+            screen.classList.remove("active");
+        });
 
+    const target=
+        document.getElementById(
+            page+"Screen"
+        );
 
-document
-.getElementById(page+"Screen")
-.classList.add("active");
+    if(!target)
+        return;
 
+    target.classList.add("active");
 
-if(page==="collection")
-renderCollection();
+    if(page==="collection")
+        renderCollection();
 
-
-if(page==="missions")
-renderMissions();
+    if(page==="missions")
+        renderMissions();
 
 }
 
 
 function goHome(){
 
-document
-.querySelectorAll(".screen")
-.forEach(x=>{
-x.classList.remove("active");
-});
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen=>{
+            screen.classList.remove("active");
+        });
 
-
-document
-.getElementById("homeScreen")
-.classList.add("active");
+    document
+        .getElementById("homeScreen")
+        .classList.add("active");
 
 }
 
 
 /* =====================================================
-   COINS
+   UI
 ===================================================== */
 
 function updateCoins(){
 
-document
-.getElementById("coinCount")
-.textContent=data.coins;
+    const element=
+        document.getElementById("coinCount");
+
+    if(element)
+        element.textContent=data.coins;
 
 }
 
-
 function updateFreeDraws(){
 
-document
-.getElementById("freeDrawCount")
-.textContent=data.freeDraws;
+    const element=
+        document.getElementById("freeDrawCount");
+
+    if(element)
+        element.textContent=data.freeDraws;
 
 }
 
@@ -1717,26 +1352,26 @@ document
 
 function coinReward(result){
 
-if(result.name==="超特大吉")
-return 100;
+    if(result.name==="超特大吉")
+        return 100;
 
-if(result.name==="大吉")
-return 50;
+    if(result.name==="大吉")
+        return 50;
 
-if(result.type==="unique")
-return 10;
+    if(result.type==="unique")
+        return 10;
 
-if([
-"末小吉",
-"凶",
-"小凶",
-"半凶",
-"末凶",
-"大凶"
-].includes(result.name))
-return 1;
+    if([
+        "末小吉",
+        "凶",
+        "小凶",
+        "半凶",
+        "末凶",
+        "大凶"
+    ].includes(result.name))
+        return 1;
 
-return 5;
+    return 5;
 
 }
 
@@ -1747,72 +1382,65 @@ return 5;
 
 function drawRealOmikuji(){
 
-/*
-無料分がある場合は
-無料分を先に使用
-*/
+    let paidWithFree=false;
 
-if(data.freeDraws>0){
+    if(data.freeDraws>0){
 
-data.freeDraws--;
+        data.freeDraws--;
 
-}else{
+        paidWithFree=true;
 
-/*
-無料分がなければ
-コインを1枚消費
-*/
+    }else{
 
-if(data.coins<=0){
+        if(data.coins<=0){
 
-alert(
-"コインが足りません！\n\n"+
-"ログインボーナスやミッションで\n"+
-コインを集めよう！"
-);
+            alert(
+                "コインが足りません！\n\n"+
+                "ログインボーナスやミッションで\n"+
+                "コインを集めよう！"
+            );
 
-return;
+            return;
 
-}
+        }
 
-data.coins--;
+        data.coins--;
 
-}
+    }
 
 
-/* =====================
-   RESULT
-===================== */
-
-const result=
-omikuji[
-Math.floor(
-Math.random()*omikuji.length
-)
-];
+    const result=
+        omikuji[
+            Math.floor(
+                Math.random()*omikuji.length
+            )
+        ];
 
 
-data.drawCount++;
+    data.drawCount++;
 
 
-registerResult(result);
+    registerResult(result);
 
 
-data.coins+=coinReward(result);
+    data.coins+=
+        coinReward(result);
 
 
-updateMissions(result);
+    updateMissions(result);
 
 
-save();
+    save();
+
+    updateCoins();
+
+    updateFreeDraws();
 
 
-updateCoins();
-
-updateFreeDraws();
+    playResult(result);
 
 
-playResult(result);
+    void paidWithFree;
 
 }
 
@@ -1823,11 +1451,17 @@ playResult(result);
 
 function registerResult(result){
 
-if(!data.obtained.includes(result.name)){
+    if(
+        !data.obtained.includes(
+            result.name
+        )
+    ){
 
-data.obtained.push(result.name);
+        data.obtained.push(
+            result.name
+        );
 
-}
+    }
 
 }
 
@@ -1838,27 +1472,25 @@ data.obtained.push(result.name);
 
 function updateMissions(result){
 
-data.missions.once=true;
+    data.missions.once=true;
 
+    if(data.drawCount>=10)
+        data.missions.ten=true;
 
-if(data.drawCount>=10)
-data.missions.ten=true;
+    if(data.drawCount>=30)
+        data.missions.thirty=true;
 
+    if(result.type==="unique")
+        data.missions.unique=true;
 
-if(data.drawCount>=30)
-data.missions.thirty=true;
+    if(result.name==="超特大吉")
+        data.missions.super=true;
 
-
-if(result.type==="unique")
-data.missions.unique=true;
-
-
-if(result.name==="超特大吉")
-data.missions.super=true;
-
-
-if(data.obtained.length>=omikuji.length)
-data.missions.complete=true;
+    if(
+        data.obtained.length>=
+        omikuji.length
+    )
+        data.missions.complete=true;
 
 }
 
@@ -1869,61 +1501,83 @@ data.missions.complete=true;
 
 function testRandom(){
 
-const result=
-omikuji[
-Math.floor(
-Math.random()*omikuji.length
-)
-];
+    const result=
+        omikuji[
+            Math.floor(
+                Math.random()*omikuji.length
+            )
+        ];
 
-playResult(result);
+    selectedResult=result;
+
+    playResult(result);
 
 }
 
 
 function testGreat(){
 
-const result=
-omikuji.find(
-x=>x.name==="大吉"
-);
+    const result=
+        omikuji.find(
+            item=>item.name==="大吉"
+        );
 
-playResult(result);
+    if(!result)
+        return;
+
+    selectedResult=result;
+
+    playResult(result);
 
 }
 
 
 function testSuper(){
 
-const result=
-omikuji.find(
-x=>x.name==="超特大吉"
-);
+    const result=
+        omikuji.find(
+            item=>item.name==="超特大吉"
+        );
 
-playResult(result);
+    if(!result)
+        return;
+
+    selectedResult=result;
+
+    playResult(result);
 
 }
 
 
 /* =====================================================
-   RESULT DISPLAY
+   RESULT
 ===================================================== */
 
 function showResult(result){
 
-document
-.getElementById("result")
-.style.display="block";
+    const resultBox=
+        document.getElementById("result");
+
+    const resultName=
+        document.getElementById("resultName");
+
+    const resultText=
+        document.getElementById("resultText");
 
 
-document
-.getElementById("resultName")
-.textContent=result.name;
+    if(!resultBox)
+        return;
 
 
-document
-.getElementById("resultText")
-.textContent=result.text;
+    resultBox.style.display="block";
+
+
+    resultName.textContent=
+        result.name;
+
+
+    resultText.textContent=
+        result.text;
 
 }
 
@@ -1934,38 +1588,35 @@ document
 
 function playResult(result){
 
-if(
-result.type==="great" ||
-result.type==="super"
-){
-
-playLuxuryEffect(result);
-
-return;
-
-}
+    if(!result)
+        return;
 
 
-if(
-result.video &&
-result.video.platform==="youtube"
-){
+    if(
+        result.type==="great" ||
+        result.type==="super"
+    ){
 
-playYouTubeEffect(result);
+        playLuxuryEffect(result);
 
-return;
+        return;
 
-}
+    }
 
 
-/*
-TikTokはHTMLから
-直接動画を取得しない。
+    if(
+        result.video &&
+        result.video.platform==="youtube"
+    ){
 
-そのため通常演出。
-*/
+        playYouTubeEffect(result);
 
-showSimpleEffect(result);
+        return;
+
+    }
+
+
+    showSimpleEffect(result);
 
 }
 
@@ -1976,57 +1627,51 @@ showSimpleEffect(result);
 
 function showSimpleEffect(result){
 
-const effect=
-document.getElementById("effect");
+    const effect=
+        document.getElementById("effect");
+
+    const text=
+        document.getElementById("effectText");
+
+    const graphics=
+        document.getElementById("effectGraphics");
+
+    const video=
+        document.getElementById("videoContainer");
 
 
-const text=
-document.getElementById("effectText");
+    video.style.display="none";
+
+    graphics.style.display="block";
+
+    effect.style.display="flex";
+
+    effect.style.background=
+        "#080b14";
 
 
-const graphics=
-document.getElementById("effectGraphics");
+    text.classList.remove("show");
+
+    text.textContent=
+        result.name;
 
 
-const video=
-document.getElementById("videoContainer");
+    void text.offsetWidth;
+
+    text.classList.add("show");
 
 
-video.style.display="none";
+    effectTimer=
+        setTimeout(
+            function(){
 
+                finishEffect();
 
-graphics.style.display="block";
+                showResult(result);
 
-
-effect.style.display="flex";
-
-
-effect.style.background="#080b14";
-
-
-text.textContent=result.name;
-
-
-text.classList.remove("show");
-
-
-/*
-再描画させてアニメーションを確実に発生
-*/
-
-void text.offsetWidth;
-
-
-text.classList.add("show");
-
-
-effectTimer=setTimeout(()=>{
-
-finishEffect();
-
-showResult(result);
-
-},2200);
+            },
+            2200
+        );
 
 }
 
@@ -2037,178 +1682,164 @@ showResult(result);
 
 function playLuxuryEffect(result){
 
-const effect=
-document.getElementById("effect");
+    const effect=
+        document.getElementById("effect");
+
+    const graphics=
+        document.getElementById("effectGraphics");
+
+    const video=
+        document.getElementById("videoContainer");
+
+    const text=
+        document.getElementById("effectText");
 
 
-const graphics=
-document.getElementById("effectGraphics");
+    if(effectTimer){
+
+        clearTimeout(effectTimer);
+
+        effectTimer=null;
+
+    }
 
 
-const video=
-document.getElementById("videoContainer");
+    video.style.display="none";
+
+    graphics.style.display="block";
+
+    effect.style.display="flex";
+
+    effect.style.background="#000";
 
 
-const text=
-document.getElementById("effectText");
+    text.textContent="";
+
+    text.classList.remove("show");
 
 
-if(effectTimer){
+    setTimeout(function(){
 
-clearTimeout(effectTimer);
+        effect.style.background=
+            "radial-gradient("+
+            "circle at center,"+
+            "#ffffff 0%,"+
+            "#e5b936 15%,"+
+            "#51410b 35%,"+
+            "#050505 75%"+
+            ")";
 
-effectTimer=null;
-
-}
-
-
-video.style.display="none";
-
-graphics.style.display="block";
-
-
-effect.style.display="flex";
+    },1000);
 
 
-effect.style.background="#000";
+    setTimeout(function(){
+
+        text.textContent=
+            result.name;
+
+        void text.offsetWidth;
+
+        text.classList.add("show");
+
+    },2500);
 
 
-text.textContent="";
+    effectTimer=
+        setTimeout(
+            function(){
 
-text.classList.remove("show");
+                finishEffect();
 
+                showResult(result);
 
-/*
-完全暗転
-*/
-
-setTimeout(()=>{
-
-effect.style.background=
-"radial-gradient("+
-"circle at center,"+
-"#ffffff 0%,"+
-"#e5b936 15%,"+
-"#51410b 35%,"+
-"#050505 75%"+
-")";
-
-},1000);
-
-
-/*
-文字登場
-*/
-
-setTimeout(()=>{
-
-text.textContent=result.name;
-
-void text.offsetWidth;
-
-text.classList.add("show");
-
-},2500);
-
-
-/*
-終了
-*/
-
-effectTimer=setTimeout(()=>{
-
-finishEffect();
-
-showResult(result);
-
-},5500);
+            },
+            5500
+        );
 
 }
 
 
 /* =====================================================
-   YOUTUBE EFFECT
+   YOUTUBE
 ===================================================== */
 
 function playYouTubeEffect(result){
 
-const effect=
-document.getElementById("effect");
+    const effect=
+        document.getElementById("effect");
+
+    const video=
+        document.getElementById("videoContainer");
+
+    const graphics=
+        document.getElementById("effectGraphics");
+
+    const frame=
+        document.getElementById("youtubeFrame");
+
+    const text=
+        document.getElementById("effectText");
 
 
-const video=
-document.getElementById("videoContainer");
+    effect.style.display="flex";
+
+    effect.style.background="#000";
+
+    graphics.style.display="none";
+
+    text.classList.remove("show");
+
+    text.textContent="";
 
 
-const graphics=
-document.getElementById("effectGraphics");
+    let url=
+        "https://www.youtube.com/embed/"
+        + result.video.id
+        + "?autoplay=1&rel=0&modestbranding=1";
 
 
-const frame=
-document.getElementById("youtubeFrame");
+    if(
+        typeof result.video.start==="number"
+    ){
+
+        url+="&start="+result.video.start;
+
+    }
 
 
-const text=
-document.getElementById("effectText");
+    frame.src=url;
+
+    video.style.display="flex";
 
 
-effect.style.display="flex";
+    let duration=10000;
 
 
-effect.style.background="#000";
+    if(
+        typeof result.video.start==="number" &&
+        typeof result.video.end==="number"
+    ){
+
+        duration=
+            (
+                result.video.end -
+                result.video.start
+            )*1000 + 1500;
+
+    }
 
 
-graphics.style.display="none";
+    effectTimer=
+        setTimeout(
+            function(){
 
+                finishEffect();
 
-text.classList.remove("show");
+                showResult(result);
 
-text.textContent="";
-
-
-let url=
-"https://www.youtube.com/embed/"
-+
-result.video.id
-+
-"?autoplay=1&rel=0&modestbranding=1";
-
-
-if(typeof result.video.start==="number"){
-
-url+="&start="+result.video.start;
-
-}
-
-
-frame.src=url;
-
-
-video.style.display="flex";
-
-
-let duration=10000;
-
-
-if(
-typeof result.video.start==="number" &&
-typeof result.video.end==="number"
-){
-
-duration=
-(result.video.end-result.video.start)*1000
-+1500;
-
-}
-
-
-effectTimer=setTimeout(()=>{
-
-finishEffect();
-
-showResult(result);
-
-},duration);
+            },
+            duration
+        );
 
 }
 
@@ -2219,64 +1850,61 @@ showResult(result);
 
 function skipEffect(){
 
-if(effectTimer){
+    if(effectTimer){
 
-clearTimeout(effectTimer);
+        clearTimeout(effectTimer);
 
-effectTimer=null;
+        effectTimer=null;
 
-}
-
-
-finishEffect();
+    }
 
 
-if(selectedResult){
+    const result=
+        selectedResult;
 
-showResult(selectedResult);
 
-selectedResult=null;
+    finishEffect();
 
-}
+
+    if(result){
+
+        showResult(result);
+
+        selectedResult=null;
+
+    }
 
 }
 
 
 /* =====================================================
-   FINISH EFFECT
+   FINISH
 ===================================================== */
 
 function finishEffect(){
 
-const effect=
-document.getElementById("effect");
+    const effect=
+        document.getElementById("effect");
+
+    const frame=
+        document.getElementById("youtubeFrame");
+
+    const video=
+        document.getElementById("videoContainer");
+
+    const text=
+        document.getElementById("effectText");
 
 
-const frame=
-document.getElementById("youtubeFrame");
+    effect.style.display="none";
 
+    video.style.display="none";
 
-const video=
-document.getElementById("videoContainer");
+    frame.src="";
 
+    text.textContent="";
 
-const text=
-document.getElementById("effectText");
-
-
-effect.style.display="none";
-
-
-video.style.display="none";
-
-
-frame.src="";
-
-
-text.textContent="";
-
-
-text.classList.remove("show");
+    text.classList.remove("show");
 
 }
 
@@ -2287,116 +1915,185 @@ text.classList.remove("show");
 
 function renderCollection(){
 
-const grid=
-document.getElementById(
-"collectionGrid"
-);
+    const grid=
+        document.getElementById(
+            "collectionGrid"
+        );
 
 
-grid.innerHTML="";
+    grid.innerHTML="";
 
 
-omikuji.forEach(result=>{
+    omikuji.forEach(function(result){
 
-const obtained=
-data.obtained.includes(
-result.name
-);
-
-
-const button=
-document.createElement("button");
+        const obtained=
+            data.obtained.includes(
+                result.name
+            );
 
 
-button.className=
-"collection-item "
-+
-(
-obtained
-?"obtained"
-:"locked"
-);
+        const button=
+            document.createElement("button");
 
 
-button.textContent=
-obtained
-?result.name
-:"🔒 未入手";
+        button.className=
+            "collection-item "
+            +
+            (
+                obtained
+                ? "obtained"
+                : "locked"
+            );
 
 
-if(obtained){
-
-button.onclick=()=>{
-
-openDetail(result);
-
-};
-
-}
+        button.textContent=
+            obtained
+            ? result.name
+            : "🔒 未入手";
 
 
-grid.appendChild(button);
+        if(obtained){
 
-});
+            button.onclick=
+                function(){
+
+                    openDetail(result);
+
+                };
+
+        }
+
+
+        grid.appendChild(button);
+
+    });
 
 }
 
 
 /* =====================================================
-   COLLECTION DETAIL
+   DETAIL
 ===================================================== */
 
 function openDetail(result){
 
-selectedResult=result;
+    selectedResult=result;
 
+    document
+        .getElementById("detailTitle")
+        .textContent=
+            result.name;
 
-document
-.getElementById("detailTitle")
-.textContent=result.name;
+    document
+        .getElementById("detailText")
+        .textContent=
+            result.text;
 
-
-document
-.getElementById("detailText")
-.textContent=result.text;
-
-
-document
-.getElementById("detailOverlay")
-.classList.add("active");
+    document
+        .getElementById("detailOverlay")
+        .classList.add("active");
 
 }
 
 
 function closeDetail(){
 
-document
-.getElementById("detailOverlay")
-.classList.remove("active");
+    document
+        .getElementById("detailOverlay")
+        .classList.remove("active");
+
+    selectedResult=null;
+
+}
 
 
-selectedResult=null;
+function watchCollectionEffect(){
+
+    if(!selectedResult)
+        return;
+
+
+    const result=
+        selectedResult;
+
+
+    closeDetail();
+
+
+    playResult(result);
 
 }
 
 
 /* =====================================================
-   COLLECTION EFFECT
+   EFFECT TEST
 ===================================================== */
 
-function watchCollectionEffect(){
+function openEffectTest(){
 
-if(!selectedResult)
-return;
+    const overlay=
+        document.getElementById(
+            "effectTestOverlay"
+        );
+
+    const list=
+        document.getElementById(
+            "effectTestList"
+        );
 
 
-const result=selectedResult;
+    list.innerHTML="";
 
 
-closeDetail();
+    omikuji.forEach(function(result){
+
+        const button=
+            document.createElement("button");
 
 
-playResult(result);
+        button.className=
+            "collection-item obtained";
+
+
+        button.textContent=
+            result.name;
+
+
+        button.onclick=
+            function(){
+
+                closeEffectTest();
+
+                /*
+                 * テストなので
+                 * コイン・無料分・回数・
+                 * ミッション・図鑑は変更しません。
+                 */
+
+                selectedResult=result;
+
+                playResult(result);
+
+            };
+
+
+        list.appendChild(button);
+
+    });
+
+
+    overlay.classList.add("active");
+
+}
+
+
+function closeEffectTest(){
+
+    document
+        .getElementById(
+            "effectTestOverlay"
+        )
+        .classList.remove("active");
 
 }
 
@@ -2407,274 +2104,269 @@ playResult(result);
 
 function renderMissions(){
 
-const list=
-document.getElementById(
-"missionList"
-);
+    const list=
+        document.getElementById(
+            "missionList"
+        );
 
 
-list.innerHTML="";
+    list.innerHTML="";
 
 
-createMission(
-list,
-"once",
-"おみくじを1回引こう",
-data.drawCount>=1,
-"100コイン",
-100
-);
+    createMission(
+        list,
+        "once",
+        "おみくじを1回引こう",
+        data.drawCount>=1,
+        "100コイン",
+        100
+    );
 
 
-createMission(
-list,
-"ten",
-"おみくじを10回引こう",
-data.drawCount>=10,
-"1000コイン",
-1000
-);
+    createMission(
+        list,
+        "ten",
+        "おみくじを10回引こう",
+        data.drawCount>=10,
+        "1000コイン",
+        1000
+    );
 
 
-createMission(
-list,
-"thirty",
-"おみくじを30回引こう",
-data.drawCount>=30,
-"2000コイン",
-2000
-);
+    createMission(
+        list,
+        "thirty",
+        "おみくじを30回引こう",
+        data.drawCount>=30,
+        "2000コイン",
+        2000
+    );
 
 
-createMission(
-list,
-"unique",
-"ユニークくじを1枚引こう",
-data.missions.unique===true,
-"2000カウンシー",
-0,
-"unique"
-);
+    createMission(
+        list,
+        "unique",
+        "ユニークくじを1枚引こう",
+        data.missions.unique===true,
+        "2000カウンシー",
+        0,
+        "unique"
+    );
 
 
-createMission(
-list,
-"super",
-"超特大吉を1枚引こう",
-data.missions.super===true,
-"5000カウンシー",
-0,
-"super"
-);
+    createMission(
+        list,
+        "super",
+        "超特大吉を1枚引こう",
+        data.missions.super===true,
+        "5000カウンシー",
+        0,
+        "super"
+    );
 
 
-createMission(
-list,
-"complete",
-"全種類をコンプリートしよう",
-data.obtained.length>=omikuji.length,
-"3000コイン ＋ おみくじ別班",
-3000,
-"complete"
-);
+    createMission(
+        list,
+        "complete",
+        "全種類をコンプリートしよう",
+        data.obtained.length>=omikuji.length,
+        "3000コイン ＋ おみくじ別班",
+        3000,
+        "complete"
+    );
 
 }
 
-
-/* =====================================================
-   CREATE MISSION
-===================================================== */
 
 function createMission(
-parent,
-id,
-title,
-complete,
-reward,
-coins,
-special=""
+    parent,
+    id,
+    title,
+    complete,
+    reward,
+    coins,
+    special=""
 ){
 
-let progress=0;
+    let progress=0;
 
-let max=1;
+    let max=1;
 
 
-if(id==="once"){
+    if(id==="once"){
 
-progress=
-Math.min(
-data.drawCount,
-1
-);
+        progress=
+            Math.min(
+                data.drawCount,
+                1
+            );
 
-max=1;
+        max=1;
+
+    }
+
+
+    if(id==="ten"){
+
+        progress=
+            Math.min(
+                data.drawCount,
+                10
+            );
+
+        max=10;
+
+    }
+
+
+    if(id==="thirty"){
+
+        progress=
+            Math.min(
+                data.drawCount,
+                30
+            );
+
+        max=30;
+
+    }
+
+
+    if(id==="complete"){
+
+        progress=
+            Math.min(
+                data.obtained.length,
+                omikuji.length
+            );
+
+        max=omikuji.length;
+
+    }
+
+
+    const percentage=
+        Math.round(
+            progress/max*100
+        );
+
+
+    const claimed=
+        data.claimed[id]===true;
+
+
+    const div=
+        document.createElement("div");
+
+
+    div.className="mission";
+
+
+    div.innerHTML=
+        "<h3>"+title+"</h3>"
+        +
+        '<div class="progress">'
+        +
+        '<div class="progress-bar" style="width:'
+        + percentage
+        + '%;"></div>'
+        +
+        '</div>'
+        +
+        '<div>進行度：'
+        + progress
+        + '/'
+        + max
+        + '</div>'
+        +
+        '<p>報酬：'
+        + reward
+        + '</p>'
+        +
+        '<button class="reward-button" '
+        + (
+            (!complete || claimed)
+            ? "disabled"
+            : ""
+        )
+        + ' onclick="claimMission(\''
+        + id
+        + '\',\''
+        + special
+        + '\','
+        + coins
+        + ')">'
+        +
+        (
+            claimed
+            ? "受け取り済み"
+            : complete
+            ? "受け取る"
+            : "未達成"
+        )
+        +
+        '</button>';
+
+
+    parent.appendChild(div);
 
 }
 
-
-if(id==="ten"){
-
-progress=
-Math.min(
-data.drawCount,
-10
-);
-
-max=10;
-
-}
-
-
-if(id==="thirty"){
-
-progress=
-Math.min(
-data.drawCount,
-30
-);
-
-max=30;
-
-}
-
-
-if(id==="complete"){
-
-progress=
-Math.min(
-data.obtained.length,
-omikuji.length
-);
-
-max=omikuji.length;
-
-}
-
-
-const percentage=
-Math.round(
-progress/max*100
-);
-
-
-const claimed=
-data.claimed[id]===true;
-
-
-const div=
-document.createElement("div");
-
-
-div.className="mission";
-
-
-div.innerHTML=`
-
-<h3>${title}</h3>
-
-<div class="progress">
-
-<div
-class="progress-bar"
-style="width:${percentage}%">
-</div>
-
-</div>
-
-<div>
-進行度：
-${progress}/${max}
-</div>
-
-<p>
-報酬：${reward}
-</p>
-
-<button
-class="reward-button"
-${(!complete || claimed)?"disabled":""}
-onclick="claimMission('${id}','${special}',${coins})">
-
-${
-claimed
-?"受け取り済み"
-:complete
-?"受け取る"
-:"未達成"
-}
-
-</button>
-
-`;
-
-
-parent.appendChild(div);
-
-}
-
-
-/* =====================================================
-   CLAIM MISSION
-===================================================== */
 
 function claimMission(
-id,
-special,
-coins
+    id,
+    special,
+    coins
 ){
 
-if(data.claimed[id])
-return;
+    if(data.claimed[id])
+        return;
 
 
-if(coins>0){
+    if(coins>0){
 
-data.coins+=coins;
+        data.coins+=coins;
 
-}
-
-
-if(special==="unique"){
-
-alert(
-"ミッション達成！\n"+
-"2000カウンシーを獲得しました！"
-);
-
-}
+    }
 
 
-if(special==="super"){
+    if(special==="unique"){
 
-alert(
-"ミッション達成！\n"+
-"5000カウンシーを獲得しました！"
-);
+        alert(
+            "ミッション達成！\n"
+            + "2000カウンシーを獲得しました！"
+        );
 
-}
-
-
-if(special==="complete"){
-
-alert(
-"ミッション達成！\n\n"+
-"称号「おみくじ別班」を獲得しました！"
-);
-
-}
+    }
 
 
-data.claimed[id]=true;
+    if(special==="super"){
+
+        alert(
+            "ミッション達成！\n"
+            + "5000カウンシーを獲得しました！"
+        );
+
+    }
 
 
-save();
+    if(special==="complete"){
+
+        alert(
+            "ミッション達成！\n\n"
+            + "称号「おみくじ別班」を獲得しました！"
+        );
+
+    }
 
 
-updateCoins();
+    data.claimed[id]=true;
 
+    save();
 
-renderMissions();
+    updateCoins();
+
+    renderMissions();
 
 }
 
@@ -2688,6 +2380,10 @@ loginBonus();
 updateCoins();
 
 updateFreeDraws();
+
+renderCollection();
+
+renderMissions();
 
 </script>
 
