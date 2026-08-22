@@ -3,18 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>おみくじ</title>
+
+<title>OMIKUJI</title>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
 
-body{
+html,body{
     margin:0;
-    font-family:"Yu Gothic","Hiragino Kaku Gothic ProN",sans-serif;
-    background:linear-gradient(135deg,#f5ecd8,#fffaf0);
-    color:#222;
+    padding:0;
+    min-height:100%;
+}
+
+body{
+    font-family:
+        "Yu Gothic",
+        "Hiragino Kaku Gothic ProN",
+        sans-serif;
+
+    color:#fff;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            #24304d 0%,
+            #0b1020 35%,
+            #03050b 100%
+        );
+
     min-height:100vh;
 }
 
@@ -31,180 +50,430 @@ button{
     display:block;
 }
 
+
+/* ================================
+   HOME
+================================ */
+
 .home{
     min-height:100vh;
+
     display:flex;
     flex-direction:column;
     align-items:center;
-    padding:45px 20px;
+
+    padding:45px 20px 60px;
 }
 
 .logo{
-    font-size:48px;
+    font-size:58px;
     font-weight:900;
-    letter-spacing:8px;
+
+    letter-spacing:12px;
+
+    text-shadow:
+        0 0 10px rgba(255,255,255,.4),
+        0 0 35px rgba(120,180,255,.4);
 }
 
 .subtitle{
-    color:#777;
-    margin:8px 0 35px;
+    margin-top:5px;
+    margin-bottom:30px;
+
+    color:#aab5d0;
+    letter-spacing:3px;
 }
 
+
+/* ================================
+   MAIN BOX
+================================ */
+
 .omikuji-box{
-    width:min(92%,560px);
-    background:#fff;
-    border-radius:28px;
+    width:min(92%,600px);
+
     padding:35px 25px;
-    box-shadow:0 15px 45px rgba(0,0,0,.12);
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.12),
+            rgba(255,255,255,.04)
+        );
+
+    border:1px solid rgba(255,255,255,.14);
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.5),
+        inset 0 0 40px rgba(255,255,255,.03);
+
     text-align:center;
 }
 
 .omikuji-symbol{
-    font-size:90px;
+    font-size:95px;
+
+    filter:
+        drop-shadow(0 0 20px rgba(255,210,80,.5));
+
+    margin-bottom:20px;
 }
+
+
+/* ================================
+   DRAW BUTTON
+================================ */
 
 .draw-button{
     width:100%;
-    padding:20px;
-    border:0;
+
+    padding:21px;
+
+    border:1px solid rgba(255,255,255,.25);
+
     border-radius:18px;
-    background:#222;
+
+    background:
+        linear-gradient(
+            135deg,
+            #202d49,
+            #10182b
+        );
+
     color:#fff;
+
     font-size:21px;
-    font-weight:bold;
+    font-weight:900;
+
+    letter-spacing:2px;
+
     cursor:pointer;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.4);
+
+    transition:.2s;
 }
 
 .draw-button:hover{
-    transform:translateY(-2px);
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 12px 40px rgba(100,160,255,.25);
 }
 
 .draw-button:disabled{
-    background:#aaa;
+    opacity:.45;
     cursor:not-allowed;
+    transform:none;
 }
 
-.home-buttons{
-    width:min(92%,560px);
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+/* ================================
+   CURRENCY
+================================ */
+
+.currency-area{
+    width:min(92%,600px);
+
+    display:flex;
     gap:12px;
+
+    margin-top:18px;
+}
+
+.currency-box{
+    flex:1;
+
+    padding:14px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.1);
+
+    text-align:center;
+}
+
+.currency-title{
+    font-size:12px;
+    color:#9eabc5;
+}
+
+.currency-value{
+    margin-top:4px;
+
+    font-size:23px;
+    font-weight:900;
+}
+
+
+/* ================================
+   MENU BUTTON
+================================ */
+
+.home-buttons{
+    width:min(92%,600px);
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+
     margin-top:20px;
 }
 
 .menu-button{
-    padding:17px 8px;
-    border:0;
-    border-radius:16px;
-    background:#fff;
-    box-shadow:0 7px 22px rgba(0,0,0,.1);
+    padding:18px 8px;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:17px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.12),
+            rgba(255,255,255,.04)
+        );
+
+    color:#fff;
+
+    font-weight:900;
+
     cursor:pointer;
-    font-weight:bold;
+
+    transition:.2s;
+}
+
+.menu-button:hover{
+    transform:translateY(-3px);
+
+    background:
+        rgba(255,255,255,.16);
+}
+
+
+/* ================================
+   TEST
+================================ */
+
+.test-area{
+    width:min(92%,600px);
+
+    margin-top:22px;
+}
+
+.test-title{
+    text-align:center;
+
+    color:#8996b3;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+
+    margin-bottom:10px;
 }
 
 .test-buttons{
-    width:min(92%,560px);
-    margin-top:18px;
     display:grid;
-    grid-template-columns:1fr 1fr 1fr;
-    gap:10px;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:8px;
 }
 
 .test-button{
-    padding:13px 5px;
-    border:0;
-    border-radius:14px;
-    background:#eee;
+    padding:12px 5px;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    border-radius:12px;
+
+    background:#11182a;
+
+    color:#d9e0f0;
+
     cursor:pointer;
+
     font-weight:bold;
 }
 
-.coin-display{
-    margin-top:20px;
-    background:#fff;
-    padding:10px 20px;
-    border-radius:14px;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
+.test-button:hover{
+    background:#1d2942;
 }
+
+
+/* ================================
+   RESULT
+================================ */
 
 .result{
     display:none;
+
     margin-top:25px;
 }
 
 .result-card{
-    background:#fffaf0;
-    border:2px solid #e2cf99;
-    border-radius:20px;
     padding:25px;
+
+    border-radius:20px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    border:
+        1px solid rgba(255,255,255,.15);
 }
 
 .result-name{
-    font-size:35px;
+    font-size:36px;
+
     font-weight:900;
 }
 
 .result-text{
     margin-top:12px;
+
     line-height:1.8;
+
+    color:#d7dcec;
 }
 
-.back{
-    position:fixed;
-    top:18px;
-    left:18px;
-    z-index:1000;
-    width:48px;
-    height:48px;
-    border:0;
-    border-radius:50%;
-    background:rgba(0,0,0,.78);
-    color:#fff;
-    font-size:24px;
-    cursor:pointer;
+
+/* ================================
+   PAGE
+================================ */
+
+.page{
+    min-height:100vh;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    padding:80px 20px 40px;
 }
 
 .page-title{
-    text-align:center;
-    font-size:32px;
+    font-size:36px;
+
     font-weight:900;
+
+    letter-spacing:4px;
+
     margin-bottom:25px;
 }
 
-.collection-grid{
-    width:min(95%,800px);
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
-    gap:10px;
-}
 
-.collection-item{
-    min-height:85px;
-    border:0;
-    border-radius:16px;
-    padding:10px;
-    font-weight:bold;
+/* ================================
+   BACK
+================================ */
+
+.back{
+    position:fixed;
+
+    top:18px;
+    left:18px;
+
+    z-index:1000;
+
+    width:50px;
+    height:50px;
+
+    border:1px solid rgba(255,255,255,.2);
+
+    border-radius:50%;
+
+    background:
+        rgba(5,8,15,.85);
+
+    color:#fff;
+
+    font-size:25px;
+
     cursor:pointer;
 }
 
+
+/* ================================
+   COLLECTION
+================================ */
+
+.collection-grid{
+    width:min(95%,850px);
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(150px,1fr));
+
+    gap:12px;
+}
+
+.collection-item{
+    min-height:90px;
+
+    border-radius:17px;
+
+    border:1px solid rgba(255,255,255,.1);
+
+    padding:12px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    color:#fff;
+}
+
 .collection-item.obtained{
-    background:#fff0b7;
+    background:
+        linear-gradient(
+            145deg,
+            #273b68,
+            #111a32
+        );
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.3);
 }
 
 .collection-item.locked{
-    background:#ddd;
-    color:#888;
+    background:#151a25;
+
+    color:#596176;
+
     cursor:not-allowed;
 }
 
+
+/* ================================
+   MODAL
+================================ */
+
 .modal-overlay{
     position:fixed;
+
     inset:0;
+
     z-index:3000;
-    background:rgba(0,0,0,.72);
+
+    background:
+        rgba(0,0,0,.8);
+
     display:none;
+
     align-items:center;
     justify-content:center;
+
     padding:20px;
 }
 
@@ -214,51 +483,87 @@ button{
 
 .modal{
     width:min(94%,600px);
+
     max-height:90vh;
+
     overflow:auto;
-    background:#fff;
+
+    padding:28px;
+
     border-radius:25px;
-    padding:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #17213a,
+            #090d18
+        );
+
+    border:1px solid rgba(255,255,255,.15);
+
     text-align:center;
 }
 
 .modal-title{
     font-size:30px;
+
     font-weight:900;
 }
 
 .modal-text{
     margin:20px 0;
+
     line-height:1.8;
+
+    color:#d6dced;
 }
 
 .action-button{
     width:100%;
+
     padding:15px;
-    border:0;
-    border-radius:13px;
+
     margin-top:10px;
+
+    border:0;
+
+    border-radius:13px;
+
     cursor:pointer;
-    font-weight:bold;
+
     font-size:16px;
+
+    font-weight:bold;
 }
 
 .primary{
-    background:#222;
+    background:#304b83;
     color:#fff;
 }
 
 .secondary{
-    background:#eee;
+    background:#252b39;
+    color:#fff;
 }
 
+
+/* ================================
+   MISSIONS
+================================ */
+
 .mission{
-    width:min(95%,650px);
-    background:#fff;
-    border-radius:18px;
+    width:min(95%,700px);
+
     padding:20px;
-    margin-bottom:13px;
-    box-shadow:0 6px 20px rgba(0,0,0,.08);
+
+    margin-bottom:14px;
+
+    border-radius:18px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:1px solid rgba(255,255,255,.1);
 }
 
 .mission h3{
@@ -267,95 +572,184 @@ button{
 
 .progress{
     height:10px;
-    background:#ddd;
+
+    background:#252a38;
+
     border-radius:10px;
+
     overflow:hidden;
+
     margin:12px 0;
 }
 
 .progress-bar{
     height:100%;
-    background:#222;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6c8fe8,
+            #a8c4ff
+        );
 }
 
 .reward-button{
-    padding:11px 17px;
+    padding:11px 18px;
+
     border:0;
+
     border-radius:10px;
-    background:#222;
+
+    background:#304b83;
+
     color:#fff;
+
     cursor:pointer;
 }
 
 .reward-button:disabled{
-    background:#aaa;
+    background:#333947;
+
+    color:#777f93;
+
     cursor:not-allowed;
 }
 
+
+/* ================================
+   SHOP
+================================ */
+
 .shop-box{
-    width:min(92%,560px);
-    min-height:300px;
+    width:min(92%,600px);
+
+    min-height:320px;
+
     display:flex;
+
     align-items:center;
     justify-content:center;
-    background:#fff;
+
     border-radius:25px;
-    box-shadow:0 12px 35px rgba(0,0,0,.1);
-    font-size:34px;
-    font-weight:900;
+
+    background:
+        linear-gradient(
+            145deg,
+            #18213a,
+            #090d18
+        );
+
+    border:1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.4);
+
+    text-align:center;
 }
 
-/* ======================
-   演出
-====================== */
+.shop-coming{
+    font-size:40px;
+
+    font-weight:900;
+
+    letter-spacing:5px;
+
+    color:#dce5ff;
+}
+
+
+/* ================================
+   EFFECT
+================================ */
 
 #effect{
     position:fixed;
+
     inset:0;
+
     z-index:9999;
+
     display:none;
+
     align-items:center;
     justify-content:center;
+
+    overflow:hidden;
+
     background:#000;
+}
+
+#effectGraphics{
+    position:absolute;
+
+    inset:0;
+
     overflow:hidden;
 }
 
 .effect-rays{
     position:absolute;
+
     width:180vmax;
     height:180vmax;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
     background:
-    repeating-conic-gradient(
-        transparent 0deg 7deg,
-        rgba(255,220,100,.22) 8deg 11deg,
-        transparent 12deg 20deg
-    );
-    animation:rotate 12s linear infinite;
+        repeating-conic-gradient(
+            transparent 0deg 7deg,
+            rgba(255,220,100,.2) 8deg 11deg,
+            transparent 12deg 20deg
+        );
+
+    animation:
+        rotate 12s linear infinite;
 }
 
 .effect-light{
     position:absolute;
+
+    left:50%;
+    top:50%;
+
     width:15vmin;
     height:15vmin;
+
+    transform:translate(-50%,-50%);
+
     border-radius:50%;
+
     background:#fff;
+
     box-shadow:
         0 0 40px #fff,
         0 0 100px gold,
         0 0 220px gold;
+
     animation:pulse 3s infinite;
 }
 
 .effect-text{
     position:relative;
+
     z-index:5;
+
     color:#fff;
-    font-size:65px;
+
+    font-size:70px;
+
     font-weight:900;
+
+    opacity:0;
+
+    text-align:center;
+
     text-shadow:
         0 0 20px gold,
         0 0 50px #fff;
-    opacity:0;
 }
 
 .effect-text.show{
@@ -364,77 +758,117 @@ button{
 
 .skip{
     position:absolute;
+
     top:20px;
     right:20px;
+
     z-index:20;
+
     padding:12px 18px;
-    border:1px solid rgba(255,255,255,.5);
+
+    border:1px solid rgba(255,255,255,.4);
+
     border-radius:12px;
-    background:rgba(0,0,0,.65);
+
+    background:
+        rgba(0,0,0,.7);
+
     color:#fff;
+
     cursor:pointer;
 }
 
-/* ======================
-   YouTube演出
-====================== */
+
+/* ================================
+   YOUTUBE
+================================ */
 
 #videoContainer{
     position:absolute;
+
     inset:0;
+
     display:none;
+
     align-items:center;
     justify-content:center;
+
     background:#000;
 }
 
 #youtubeFrame{
     width:min(90vw,900px);
+
     aspect-ratio:16/9;
+
     border:0;
 }
 
-.video-note{
-    position:absolute;
-    bottom:25px;
-    left:50%;
-    transform:translateX(-50%);
-    color:#fff;
-    font-size:13px;
-    opacity:.7;
-}
+
+/* ================================
+   ANIMATION
+================================ */
 
 @keyframes rotate{
-    from{transform:rotate(0deg)}
-    to{transform:rotate(360deg)}
+
+    from{
+        transform:
+            translate(-50%,-50%)
+            rotate(0deg);
+    }
+
+    to{
+        transform:
+            translate(-50%,-50%)
+            rotate(360deg);
+    }
+
 }
 
 @keyframes pulse{
+
     0%,100%{
-        transform:scale(.4);
+        transform:
+            translate(-50%,-50%)
+            scale(.4);
+
         opacity:.25;
     }
+
     50%{
-        transform:scale(2);
+        transform:
+            translate(-50%,-50%)
+            scale(2);
+
         opacity:1;
     }
+
 }
 
 @keyframes appear{
+
     from{
         transform:scale(.2);
         opacity:0;
     }
+
     to{
         transform:scale(1);
         opacity:1;
     }
+
 }
+
+
+/* ================================
+   MOBILE
+================================ */
 
 @media(max-width:600px){
 
     .logo{
-        font-size:38px;
+        font-size:40px;
+        letter-spacing:7px;
     }
 
     .home-buttons{
@@ -445,29 +879,39 @@ button{
         grid-template-columns:1fr;
     }
 
-    .effect-text{
-        font-size:42px;
+    .currency-area{
+        flex-direction:column;
     }
+
+    .effect-text{
+        font-size:43px;
+    }
+
 }
+
 </style>
 </head>
+
 
 <body>
 
 
-<!-- =========================
-     ホーム
-========================= -->
+<!-- =================================================
+     HOME
+================================================= -->
 
 <div id="homeScreen" class="screen active">
 
 <div class="home">
 
-<div class="logo">おみくじ</div>
+<div class="logo">
+OMIKUJI
+</div>
 
 <div class="subtitle">
-一日一回、今日の運勢を。
+一日一回ではない。運が続く限り引ける。
 </div>
+
 
 <div class="omikuji-box">
 
@@ -479,8 +923,11 @@ button{
 id="drawButton"
 class="draw-button"
 onclick="drawRealOmikuji()">
+
 おみくじを引く
+
 </button>
+
 
 <div id="result" class="result">
 
@@ -503,57 +950,103 @@ class="result-text">
 </div>
 
 
+<!-- CURRENCY -->
+
+<div class="currency-area">
+
+<div class="currency-box">
+
+<div class="currency-title">
+OMIKUJI COIN
+</div>
+
+<div
+id="coinCount"
+class="currency-value">
+0
+</div>
+
+</div>
+
+
+<div class="currency-box">
+
+<div class="currency-title">
+FREE DRAW
+</div>
+
+<div
+id="freeDrawCount"
+class="currency-value">
+0
+</div>
+
+</div>
+
+</div>
+
+
+<!-- MENU -->
+
 <div class="home-buttons">
 
 <button
 class="menu-button"
 onclick="openPage('collection')">
+
 📖 図鑑
+
 </button>
 
 <button
 class="menu-button"
 onclick="openPage('shop')">
-🛒 ショップ
+
+🏪 ショップ
+
 </button>
 
 <button
 class="menu-button"
 onclick="openPage('missions')">
+
 🎯 ミッション
+
 </button>
 
 </div>
 
 
-<!-- テスト機能 -->
+<!-- TEST -->
+
+<div class="test-area">
+
+<div class="test-title">
+TEST / 演出確認
+</div>
 
 <div class="test-buttons">
 
 <button
 class="test-button"
 onclick="testRandom()">
-🧪 テスト
+ランダム
 </button>
 
 <button
 class="test-button"
 onclick="testGreat()">
-✨ 大吉テスト
+大吉
 </button>
 
 <button
 class="test-button"
 onclick="testSuper()">
-🌟 超特大吉テスト
+超特大吉
 </button>
 
 </div>
 
-
-<div class="coin-display">
-🪙 コイン：
-<span id="coinCount">0</span>
 </div>
 
 </div>
@@ -561,21 +1054,26 @@ onclick="testSuper()">
 </div>
 
 
-<!-- =========================
-     図鑑
-========================= -->
+<!-- =================================================
+     COLLECTION
+================================================= -->
 
 <div id="collectionScreen" class="screen">
 
-<button class="back" onclick="goHome()">←</button>
+<div class="page">
 
-<div class="home">
+<button
+class="back"
+onclick="goHome()">
+←
+</button>
 
 <div class="page-title">
-📖 おみくじ図鑑
+図鑑
 </div>
 
-<div id="collectionGrid"
+<div
+id="collectionGrid"
 class="collection-grid">
 </div>
 
@@ -584,55 +1082,70 @@ class="collection-grid">
 </div>
 
 
-<!-- =========================
-     ショップ
-========================= -->
-
-<div id="shopScreen" class="screen">
-
-<button class="back" onclick="goHome()">←</button>
-
-<div class="home">
-
-<div class="page-title">
-🛒 ショップ
-</div>
-
-<div class="shop-box">
-近日公開
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =========================
-     ミッション
-========================= -->
+<!-- =================================================
+     MISSIONS
+================================================= -->
 
 <div id="missionsScreen" class="screen">
 
-<button class="back" onclick="goHome()">←</button>
+<div class="page">
 
-<div class="home">
+<button
+class="back"
+onclick="goHome()">
+←
+</button>
 
 <div class="page-title">
-🎯 ミッション
+MISSIONS
 </div>
 
-<div id="missionList"></div>
+<div
+id="missionList">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =================================================
+     SHOP
+================================================= -->
+
+<div id="shopScreen" class="screen">
+
+<div class="page">
+
+<button
+class="back"
+onclick="goHome()">
+←
+</button>
+
+<div class="page-title">
+SHOP
+</div>
+
+<div class="shop-box">
+
+<div class="shop-coming">
+COMING SOON
+</div>
+
+</div>
 
 </div>
 
 </div>
 
 
-<!-- =========================
-     図鑑詳細
-========================= -->
+<!-- =================================================
+     DETAIL MODAL
+================================================= -->
 
-<div id="detailOverlay"
+<div
+id="detailOverlay"
 class="modal-overlay">
 
 <div class="modal">
@@ -650,13 +1163,17 @@ class="modal-text">
 <button
 class="action-button primary"
 onclick="watchCollectionEffect()">
+
 🎬 演出を見る
+
 </button>
 
 <button
 class="action-button secondary"
 onclick="closeDetail()">
+
 閉じる
+
 </button>
 
 </div>
@@ -664,27 +1181,14 @@ onclick="closeDetail()">
 </div>
 
 
-<!-- =========================
-     演出画面
-========================= -->
+<!-- =================================================
+     EFFECT
+================================================= -->
 
 <div id="effect">
 
-<div id="videoContainer">
-
-<iframe
-id="youtubeFrame"
-allow="autoplay; encrypted-media"
-allowfullscreen>
-</iframe>
-
-<div class="video-note">
-公式埋め込みプレーヤー
-</div>
-
-</div>
-
-<div id="effectGraphics">
+<div
+id="effectGraphics">
 
 <div class="effect-rays"></div>
 
@@ -692,21 +1196,38 @@ allowfullscreen>
 
 </div>
 
-<button
-class="skip"
-onclick="skipEffect()">
-スキップ
-</button>
+
+<div
+id="videoContainer">
+
+<iframe
+id="youtubeFrame"
+allow="autoplay; encrypted-media"
+allowfullscreen>
+</iframe>
+
+</div>
+
 
 <div
 id="effectText"
 class="effect-text">
 </div>
 
+
+<button
+class="skip"
+onclick="skipEffect()">
+
+SKIP
+
+</button>
+
 </div>
 
 
 <script>
+
 
 /* =====================================================
    おみくじデータ
@@ -780,14 +1301,16 @@ text:"今日は少し注意して過ごそう　ラッキーアイテム：聖�
 type:"normal"
 },
 
+
 /* =====================
-   ユニーク
+   UNIQUE
 ===================== */
 
 {
 name:"狩野英孝吉",
 text:"ライトが割れました　ラッキーアイテム：如意棒",
 type:"unique",
+
 video:{
 platform:"youtube",
 id:"YwE3kWmbpm4",
@@ -800,6 +1323,7 @@ end:411
 name:"ようごん吉",
 text:"ようよう白く成りゆく山際　ラッキーアイテム：清少納GON",
 type:"unique",
+
 video:{
 platform:"youtube",
 id:"gLWqgEgnKuk",
@@ -812,6 +1336,7 @@ end:3
 name:"ディオ吉",
 text:"お前は今まで食ってきたパンの枚数を覚えているのか　ラッキーアイテム：記憶力/勇気",
 type:"unique",
+
 video:{
 platform:"youtube",
 id:"OX-b24uyXUE",
@@ -823,6 +1348,7 @@ full:true
 name:"バイオ吉",
 text:"お前も今日から家族だ　ラッキーアイテム：好き嫌いしない口",
 type:"unique",
+
 video:{
 platform:"youtube",
 id:"DVAbjoExTHo",
@@ -835,6 +1361,7 @@ end:2
 name:"真島吉",
 text:"そこの桐生ちゃん止まりなさい　ラッキーアイテム：桐生一馬",
 type:"unique",
+
 video:{
 platform:"youtube",
 id:"f2oaie25UMU",
@@ -847,6 +1374,7 @@ end:15
 name:"鶏吉",
 text:"do you know what time it is?　ラッキーアイテム：トランシーバー",
 type:"unique",
+
 video:{
 platform:"youtube",
 id:"B4MWD8hEZ9g",
@@ -858,6 +1386,7 @@ full:true
 name:"レヴォリューション吉",
 text:"勢いのある一日になりそう！　ラッキーアイテム：松岡修造",
 type:"unique",
+
 video:{
 platform:"youtube",
 id:"Lz24PqZkF2s",
@@ -870,6 +1399,7 @@ end:86
 name:"丸亀吉",
 text:"今日はかなり荒れ模様。落ち着いて行動しよう　ラッキーアイテム：うどん",
 type:"unique",
+
 video:{
 platform:"tiktok",
 id:"7609227181666979079"
@@ -880,6 +1410,7 @@ id:"7609227181666979079"
 name:"丸亀吉２",
 text:"今日は何事にも冷静に対応しよう　ラッキーアイテム：手打ち麺",
 type:"unique",
+
 video:{
 platform:"tiktok",
 id:"7653401503914315026"
@@ -890,6 +1421,7 @@ id:"7653401503914315026"
 name:"布団ちゃん吉",
 text:"～君と夏の終わり～　ここの鶏皮ってカリカリ？　ラッキーアイテム：放屁",
 type:"unique",
+
 video:{
 platform:"youtube",
 id:"wcqypcm5MZ0",
@@ -901,6 +1433,7 @@ full:true
 name:"陣内智則吉",
 text:"笑いのニューウェーブを感じる一日！　ラッキーアイテム：ノリのよさ",
 type:"unique",
+
 video:{
 platform:"tiktok",
 id:"7616618149386964244"
@@ -911,6 +1444,7 @@ id:"7616618149386964244"
 name:"GON吉",
 text:"お前！それは犬のほうを助けなきゃダメだろ！！　ラッキーアイテム：猫",
 type:"unique",
+
 video:{
 platform:"tiktok",
 id:"7632964352496160020",
@@ -922,6 +1456,7 @@ audioOnly:true
 name:"葉吉",
 text:"おっけー無理しね　ラッキーアイテム：あきらめも肝心",
 type:"unique",
+
 video:{
 platform:"youtube",
 id:"zsd4A1MrEec",
@@ -934,6 +1469,7 @@ end:1011
 name:"乙骨吉",
 text:"よかったーーーwwwwww　ラッキーアイテム：安心",
 type:"unique",
+
 video:{
 platform:"youtube",
 id:"KIaKU_lv25I",
@@ -945,9 +1481,10 @@ full:true
 name:"偽骨吉",
 text:"今日はゆるくいこう　ラッキーアイテム：ゆるゆる",
 type:"unique",
+
 video:{
 platform:"tiktok",
-id:"7637070073588485396"
+id:"7637070073580485396"
 }
 },
 
@@ -955,6 +1492,7 @@ id:"7637070073588485396"
 name:"クラピカ吉",
 text:"ジャッチメントチェーン　ラッキーアイテム：クルタ族の目",
 type:"unique",
+
 video:{
 platform:"youtube",
 id:"YrCGQ_WLlTY",
@@ -967,6 +1505,7 @@ end:3
 name:"偽ピカ吉",
 text:"エンペラーペンギンタイム　ラッキーアイテム：ぺんぎん",
 type:"unique",
+
 video:{
 platform:"tiktok",
 id:"7592179888384183559",
@@ -978,6 +1517,7 @@ audioOnly:true
 name:"MASAAKI吉",
 text:"吉を見たその日から運命を感じたんだ　ラッキーアイテム：探索力",
 type:"unique",
+
 video:{
 platform:"youtube",
 id:"--fpIS91cwA",
@@ -985,8 +1525,9 @@ full:true
 }
 },
 
+
 /* =====================
-   大吉
+   RARE
 ===================== */
 
 {
@@ -1013,23 +1554,34 @@ JSON.parse(
 localStorage.getItem("omikujiData") || "{}"
 );
 
+
 if(typeof data.coins !== "number")
 data.coins=0;
+
+
+if(typeof data.freeDraws !== "number")
+data.freeDraws=0;
+
+
+if(typeof data.lastLogin !== "string")
+data.lastLogin="";
+
 
 if(!Array.isArray(data.obtained))
 data.obtained=[];
 
+
 if(typeof data.drawCount !== "number")
 data.drawCount=0;
 
-if(typeof data.lastDraw !== "string")
-data.lastDraw="";
 
 if(!data.missions)
 data.missions={};
 
+
 if(!data.claimed)
 data.claimed={};
+
 
 let selectedResult=null;
 
@@ -1037,7 +1589,7 @@ let effectTimer=null;
 
 
 /* =====================================================
-   保存
+   SAVE
 ===================================================== */
 
 function save(){
@@ -1051,7 +1603,7 @@ JSON.stringify(data)
 
 
 /* =====================================================
-   日付
+   DATE
 ===================================================== */
 
 function today(){
@@ -1068,7 +1620,33 @@ return d.getFullYear()
 
 
 /* =====================================================
-   画面
+   LOGIN BONUS
+===================================================== */
+
+function loginBonus(){
+
+const date=today();
+
+if(data.lastLogin!==date){
+
+data.lastLogin=date;
+
+data.freeDraws++;
+
+save();
+
+alert(
+"🎁 LOGIN BONUS\n\n"+
+"無料おみくじを1回獲得しました！"
+);
+
+}
+
+}
+
+
+/* =====================================================
+   PAGE
 ===================================================== */
 
 function openPage(page){
@@ -1079,17 +1657,21 @@ document
 x.classList.remove("active");
 });
 
+
 document
 .getElementById(page+"Screen")
 .classList.add("active");
 
+
 if(page==="collection")
 renderCollection();
+
 
 if(page==="missions")
 renderMissions();
 
 }
+
 
 function goHome(){
 
@@ -1099,6 +1681,7 @@ document
 x.classList.remove("active");
 });
 
+
 document
 .getElementById("homeScreen")
 .classList.add("active");
@@ -1107,7 +1690,7 @@ document
 
 
 /* =====================================================
-   コイン
+   COINS
 ===================================================== */
 
 function updateCoins(){
@@ -1119,8 +1702,17 @@ document
 }
 
 
+function updateFreeDraws(){
+
+document
+.getElementById("freeDrawCount")
+.textContent=data.freeDraws;
+
+}
+
+
 /* =====================================================
-   コイン報酬
+   COIN REWARD
 ===================================================== */
 
 function coinReward(result){
@@ -1150,20 +1742,47 @@ return 5;
 
 
 /* =====================================================
-   本番おみくじ
+   REAL DRAW
 ===================================================== */
 
 function drawRealOmikuji(){
 
-if(data.lastDraw===today()){
+/*
+無料分がある場合は
+無料分を先に使用
+*/
+
+if(data.freeDraws>0){
+
+data.freeDraws--;
+
+}else{
+
+/*
+無料分がなければ
+コインを1枚消費
+*/
+
+if(data.coins<=0){
 
 alert(
-"今日はもう引きました！\nまた明日引けます。"
+"コインが足りません！\n\n"+
+"ログインボーナスやミッションで\n"+
+コインを集めよう！"
 );
 
 return;
 
 }
+
+data.coins--;
+
+}
+
+
+/* =====================
+   RESULT
+===================== */
 
 const result=
 omikuji[
@@ -1172,29 +1791,34 @@ Math.random()*omikuji.length
 )
 ];
 
-data.lastDraw=today();
 
 data.drawCount++;
 
+
 registerResult(result);
+
 
 data.coins+=coinReward(result);
 
+
 updateMissions(result);
+
 
 save();
 
+
 updateCoins();
 
-playResult(result);
+updateFreeDraws();
 
-updateDrawButton();
+
+playResult(result);
 
 }
 
 
 /* =====================================================
-   結果登録
+   REGISTER
 ===================================================== */
 
 function registerResult(result){
@@ -1209,24 +1833,29 @@ data.obtained.push(result.name);
 
 
 /* =====================================================
-   ミッション更新
+   MISSION UPDATE
 ===================================================== */
 
 function updateMissions(result){
 
 data.missions.once=true;
 
+
 if(data.drawCount>=10)
 data.missions.ten=true;
+
 
 if(data.drawCount>=30)
 data.missions.thirty=true;
 
+
 if(result.type==="unique")
 data.missions.unique=true;
 
+
 if(result.name==="超特大吉")
 data.missions.super=true;
+
 
 if(data.obtained.length>=omikuji.length)
 data.missions.complete=true;
@@ -1235,7 +1864,7 @@ data.missions.complete=true;
 
 
 /* =====================================================
-   テスト
+   TEST
 ===================================================== */
 
 function testRandom(){
@@ -1251,6 +1880,7 @@ playResult(result);
 
 }
 
+
 function testGreat(){
 
 const result=
@@ -1261,6 +1891,7 @@ x=>x.name==="大吉"
 playResult(result);
 
 }
+
 
 function testSuper(){
 
@@ -1275,7 +1906,7 @@ playResult(result);
 
 
 /* =====================================================
-   結果表示
+   RESULT DISPLAY
 ===================================================== */
 
 function showResult(result){
@@ -1284,9 +1915,11 @@ document
 .getElementById("result")
 .style.display="block";
 
+
 document
 .getElementById("resultName")
 .textContent=result.name;
+
 
 document
 .getElementById("resultText")
@@ -1296,13 +1929,15 @@ document
 
 
 /* =====================================================
-   結果演出
+   PLAY RESULT
 ===================================================== */
 
 function playResult(result){
 
-if(result.type==="great" ||
-result.type==="super"){
+if(
+result.type==="great" ||
+result.type==="super"
+){
 
 playLuxuryEffect(result);
 
@@ -1310,8 +1945,11 @@ return;
 
 }
 
-if(result.video &&
-result.video.platform==="youtube"){
+
+if(
+result.video &&
+result.video.platform==="youtube"
+){
 
 playYouTubeEffect(result);
 
@@ -1319,9 +1957,12 @@ return;
 
 }
 
+
 /*
-TikTokはHTMLから動画を直接取得しない。
-そのため通常の演出を表示。
+TikTokはHTMLから
+直接動画を取得しない。
+
+そのため通常演出。
 */
 
 showSimpleEffect(result);
@@ -1330,7 +1971,7 @@ showSimpleEffect(result);
 
 
 /* =====================================================
-   通常演出
+   SIMPLE EFFECT
 ===================================================== */
 
 function showSimpleEffect(result){
@@ -1338,26 +1979,46 @@ function showSimpleEffect(result){
 const effect=
 document.getElementById("effect");
 
+
 const text=
 document.getElementById("effectText");
+
 
 const graphics=
 document.getElementById("effectGraphics");
 
+
 const video=
 document.getElementById("videoContainer");
 
+
 video.style.display="none";
+
 
 graphics.style.display="block";
 
+
 effect.style.display="flex";
 
-effect.style.background="#111";
+
+effect.style.background="#080b14";
+
 
 text.textContent=result.name;
 
+
+text.classList.remove("show");
+
+
+/*
+再描画させてアニメーションを確実に発生
+*/
+
+void text.offsetWidth;
+
+
 text.classList.add("show");
+
 
 effectTimer=setTimeout(()=>{
 
@@ -1371,7 +2032,7 @@ showResult(result);
 
 
 /* =====================================================
-   豪華演出
+   LUXURY EFFECT
 ===================================================== */
 
 function playLuxuryEffect(result){
@@ -1379,49 +2040,80 @@ function playLuxuryEffect(result){
 const effect=
 document.getElementById("effect");
 
+
 const graphics=
 document.getElementById("effectGraphics");
+
 
 const video=
 document.getElementById("videoContainer");
 
+
 const text=
 document.getElementById("effectText");
+
+
+if(effectTimer){
+
+clearTimeout(effectTimer);
+
+effectTimer=null;
+
+}
+
 
 video.style.display="none";
 
 graphics.style.display="block";
 
+
 effect.style.display="flex";
 
+
 effect.style.background="#000";
+
 
 text.textContent="";
 
 text.classList.remove("show");
 
-/* 暗転 */
+
+/*
+完全暗転
+*/
 
 setTimeout(()=>{
 
 effect.style.background=
-"radial-gradient(circle,#fff,#e5b936,#080808)";
+"radial-gradient("+
+"circle at center,"+
+"#ffffff 0%,"+
+"#e5b936 15%,"+
+"#51410b 35%,"+
+"#050505 75%"+
+")";
 
-},1300);
+},1000);
 
 
-/* 光 */
+/*
+文字登場
+*/
 
 setTimeout(()=>{
 
 text.textContent=result.name;
 
+void text.offsetWidth;
+
 text.classList.add("show");
 
-},3200);
+},2500);
 
 
-/* 終了 */
+/*
+終了
+*/
 
 effectTimer=setTimeout(()=>{
 
@@ -1429,13 +2121,13 @@ finishEffect();
 
 showResult(result);
 
-},6000);
+},5500);
 
 }
 
 
 /* =====================================================
-   YouTube演出
+   YOUTUBE EFFECT
 ===================================================== */
 
 function playYouTubeEffect(result){
@@ -1443,23 +2135,31 @@ function playYouTubeEffect(result){
 const effect=
 document.getElementById("effect");
 
+
 const video=
 document.getElementById("videoContainer");
+
 
 const graphics=
 document.getElementById("effectGraphics");
 
+
 const frame=
 document.getElementById("youtubeFrame");
+
 
 const text=
 document.getElementById("effectText");
 
+
 effect.style.display="flex";
+
 
 effect.style.background="#000";
 
+
 graphics.style.display="none";
+
 
 text.classList.remove("show");
 
@@ -1480,12 +2180,15 @@ url+="&start="+result.video.start;
 
 }
 
+
 frame.src=url;
+
 
 video.style.display="flex";
 
 
 let duration=10000;
+
 
 if(
 typeof result.video.start==="number" &&
@@ -1497,6 +2200,7 @@ duration=
 +1500;
 
 }
+
 
 effectTimer=setTimeout(()=>{
 
@@ -1510,7 +2214,7 @@ showResult(result);
 
 
 /* =====================================================
-   演出スキップ
+   SKIP
 ===================================================== */
 
 function skipEffect(){
@@ -1523,7 +2227,9 @@ effectTimer=null;
 
 }
 
+
 finishEffect();
+
 
 if(selectedResult){
 
@@ -1537,7 +2243,7 @@ selectedResult=null;
 
 
 /* =====================================================
-   演出終了
+   FINISH EFFECT
 ===================================================== */
 
 function finishEffect(){
@@ -1545,22 +2251,30 @@ function finishEffect(){
 const effect=
 document.getElementById("effect");
 
+
 const frame=
 document.getElementById("youtubeFrame");
+
 
 const video=
 document.getElementById("videoContainer");
 
+
 const text=
 document.getElementById("effectText");
 
+
 effect.style.display="none";
+
 
 video.style.display="none";
 
+
 frame.src="";
 
+
 text.textContent="";
+
 
 text.classList.remove("show");
 
@@ -1568,7 +2282,7 @@ text.classList.remove("show");
 
 
 /* =====================================================
-   図鑑
+   COLLECTION
 ===================================================== */
 
 function renderCollection(){
@@ -1578,7 +2292,9 @@ document.getElementById(
 "collectionGrid"
 );
 
+
 grid.innerHTML="";
+
 
 omikuji.forEach(result=>{
 
@@ -1587,8 +2303,10 @@ data.obtained.includes(
 result.name
 );
 
+
 const button=
 document.createElement("button");
+
 
 button.className=
 "collection-item "
@@ -1599,18 +2317,23 @@ obtained
 :"locked"
 );
 
+
 button.textContent=
 obtained
 ?result.name
 :"🔒 未入手";
 
+
 if(obtained){
 
 button.onclick=()=>{
+
 openDetail(result);
+
 };
 
 }
+
 
 grid.appendChild(button);
 
@@ -1620,20 +2343,23 @@ grid.appendChild(button);
 
 
 /* =====================================================
-   図鑑詳細
+   COLLECTION DETAIL
 ===================================================== */
 
 function openDetail(result){
 
 selectedResult=result;
 
+
 document
 .getElementById("detailTitle")
 .textContent=result.name;
 
+
 document
 .getElementById("detailText")
 .textContent=result.text;
+
 
 document
 .getElementById("detailOverlay")
@@ -1641,11 +2367,13 @@ document
 
 }
 
+
 function closeDetail(){
 
 document
 .getElementById("detailOverlay")
 .classList.remove("active");
+
 
 selectedResult=null;
 
@@ -1653,7 +2381,7 @@ selectedResult=null;
 
 
 /* =====================================================
-   図鑑から演出
+   COLLECTION EFFECT
 ===================================================== */
 
 function watchCollectionEffect(){
@@ -1661,9 +2389,12 @@ function watchCollectionEffect(){
 if(!selectedResult)
 return;
 
+
 const result=selectedResult;
 
+
 closeDetail();
+
 
 playResult(result);
 
@@ -1671,7 +2402,7 @@ playResult(result);
 
 
 /* =====================================================
-   ミッション
+   MISSIONS
 ===================================================== */
 
 function renderMissions(){
@@ -1680,6 +2411,7 @@ const list=
 document.getElementById(
 "missionList"
 );
+
 
 list.innerHTML="";
 
@@ -1750,7 +2482,7 @@ data.obtained.length>=omikuji.length,
 
 
 /* =====================================================
-   ミッション生成
+   CREATE MISSION
 ===================================================== */
 
 function createMission(
@@ -1764,53 +2496,90 @@ special=""
 ){
 
 let progress=0;
+
 let max=1;
 
+
 if(id==="once"){
-progress=Math.min(data.drawCount,1);
+
+progress=
+Math.min(
+data.drawCount,
+1
+);
+
 max=1;
+
 }
+
 
 if(id==="ten"){
-progress=Math.min(data.drawCount,10);
+
+progress=
+Math.min(
+data.drawCount,
+10
+);
+
 max=10;
+
 }
+
 
 if(id==="thirty"){
-progress=Math.min(data.drawCount,30);
+
+progress=
+Math.min(
+data.drawCount,
+30
+);
+
 max=30;
+
 }
 
+
 if(id==="complete"){
-progress=Math.min(
+
+progress=
+Math.min(
 data.obtained.length,
 omikuji.length
 );
+
 max=omikuji.length;
+
 }
+
 
 const percentage=
 Math.round(
 progress/max*100
 );
 
+
 const claimed=
 data.claimed[id]===true;
+
 
 const div=
 document.createElement("div");
 
+
 div.className="mission";
+
 
 div.innerHTML=`
 
 <h3>${title}</h3>
 
 <div class="progress">
+
 <div
 class="progress-bar"
 style="width:${percentage}%">
 </div>
+
 </div>
 
 <div>
@@ -1839,13 +2608,14 @@ claimed
 
 `;
 
+
 parent.appendChild(div);
 
 }
 
 
 /* =====================================================
-   ミッション受取
+   CLAIM MISSION
 ===================================================== */
 
 function claimMission(
@@ -1857,39 +2627,52 @@ coins
 if(data.claimed[id])
 return;
 
-if(coins>0)
+
+if(coins>0){
+
 data.coins+=coins;
+
+}
 
 
 if(special==="unique"){
 
 alert(
-"ミッション達成！\n2000カウンシーを獲得しました！"
+"ミッション達成！\n"+
+"2000カウンシーを獲得しました！"
 );
 
 }
+
 
 if(special==="super"){
 
 alert(
-"ミッション達成！\n5000カウンシーを獲得しました！"
+"ミッション達成！\n"+
+"5000カウンシーを獲得しました！"
 );
 
 }
+
 
 if(special==="complete"){
 
 alert(
-"ミッション達成！\n\n称号「おみくじ別班」を獲得しました！"
+"ミッション達成！\n\n"+
+"称号「おみくじ別班」を獲得しました！"
 );
 
 }
 
+
 data.claimed[id]=true;
+
 
 save();
 
+
 updateCoins();
+
 
 renderMissions();
 
@@ -1897,42 +2680,14 @@ renderMissions();
 
 
 /* =====================================================
-   1日1回ボタン
+   INITIALIZE
 ===================================================== */
 
-function updateDrawButton(){
-
-const button=
-document.getElementById(
-"drawButton"
-);
-
-if(data.lastDraw===today()){
-
-button.disabled=true;
-
-button.textContent=
-"今日はもう引きました";
-
-}else{
-
-button.disabled=false;
-
-button.textContent=
-"おみくじを引く";
-
-}
-
-}
-
-
-/* =====================================================
-   初期化
-===================================================== */
+loginBonus();
 
 updateCoins();
 
-updateDrawButton();
+updateFreeDraws();
 
 </script>
 
