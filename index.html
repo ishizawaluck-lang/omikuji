@@ -8697,5 +8697,368 @@ document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#ef
 })();
 </script>
 
+
+<style id="v43-test-rescue-css">
+#v43TestOverlay{position:fixed;inset:0;z-index:2147483646;display:none;align-items:center;justify-content:center;background:rgba(1,3,10,.97);padding:18px;touch-action:none}
+#v43TestOverlay.show{display:flex}
+#v43TestPanel{width:min(96vw,1100px);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#17223d,#050813);border:1px solid rgba(255,255,255,.18);border-radius:22px;padding:22px;box-shadow:0 30px 100px rgba(0,0,0,.7)}
+#v43TestGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}
+.v43TestBtn,.v43Close{appearance:none;border:1px solid rgba(255,255,255,.16);border-radius:14px;color:#fff;background:#20345d;padding:16px 10px;font-weight:900;cursor:pointer;touch-action:manipulation;user-select:none}
+.v43TestBtn:active,.v43Close:active{transform:scale(.98)}
+.v43Close{width:100%;margin-top:12px;background:#2a3142}
+#v43TestTitle{font:900 28px Georgia,serif;text-align:center;color:#fff;margin-bottom:8px}
+#v43TestHint{font:600 12px Arial,sans-serif;text-align:center;color:#aeb9d2;margin-bottom:16px}
+#v43TestSkip{position:fixed;right:14px;top:14px;z-index:2147483647;display:none;border:1px solid rgba(255,255,255,.6);border-radius:12px;background:rgba(0,0,0,.85);color:#fff;padding:12px 16px;font-weight:900;cursor:pointer;touch-action:manipulation}
+#v43TestSkip.show{display:block}
+#effect{z-index:2147483645!important}
+#effectGraphics,#videoContainer,#effectText{pointer-events:auto}
+</style>
+<script id="v43-test-rescue-js">
+(function(){
+  const W=window;
+  let overlay=null, skip=null, active=false, token=0;
+
+  function ensure(){
+    if(!overlay){
+      overlay=document.createElement('div');
+      overlay.id='v43TestOverlay';
+      overlay.innerHTML='<div id="v43TestPanel"><div id="v43TestTitle">EFFECT TEST</div><div id="v43TestHint">本番で使う実際の演出関数を直接呼び出します。ここだけは簡易プレビューを使いません。</div><div id="v43TestGrid"></div><button class="v43Close" type="button">閉じる</button></div>';
+      document.body.appendChild(overlay);
+      overlay.querySelector('.v43Close').addEventListener('pointerdown',e=>{e.preventDefault();e.stopImmediatePropagation();close();},{capture:true,passive:false});
+      overlay.querySelector('.v43Close').addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();close();},{capture:true});
+    }
+    if(!skip){
+      skip=document.createElement('button');
+      skip.id='v43TestSkip';skip.type='button';skip.textContent='SKIP';
+      document.body.appendChild(skip);
+      const go=e=>{e.preventDefault();e.stopImmediatePropagation();stopTest(true)};
+      skip.addEventListener('pointerdown',go,{capture:true,passive:false});
+      skip.addEventListener('touchstart',go,{capture:true,passive:false});
+      skip.addEventListener('click',go,{capture:true});
+    }
+    return overlay;
+  }
+  function close(){ensure().classList.remove('show')}
+  function showSkip(v){ensure();skip.classList.toggle('show',!!v)}
+
+  function hardStop(){
+    try{if(typeof W.finishEffect==='function')W.finishEffect();}catch(e){}
+    try{if(typeof W.cleanupEffect==='function')W.cleanupEffect();}catch(e){}
+    try{document.querySelectorAll('iframe').forEach(f=>{if(f.id==='youtubeFrame'||f.id==='tiktokFrame')f.src='about:blank'});}catch(e){}
+    try{if(W.__v8ctx)W.__v8ctx.close().catch(()=>{});W.__v8ctx=null}catch(e){}
+    try{if(W.__v9AudioCtx)W.__v9AudioCtx.close().catch(()=>{});W.__v9AudioCtx=null}catch(e){}
+    try{if(W.__v6AudioContext)W.__v6AudioContext.close().catch(()=>{});W.__v6AudioContext=null}catch(e){}
+    try{if(W.__v39AudioContext)W.__v39AudioContext.close().catch(()=>{});W.__v39AudioContext=null}catch(e){}
+  }
+
+  function stopTest(showResult){
+    token++;active=false;showSkip(false);
+    hardStop();
+    if(showResult && W.__v43Result && typeof W.showResult==='function'){
+      try{W.selectedResult=W.__v43Result;W.showResult(W.__v43Result,false)}catch(e){}
+    }
+  }
+
+  function directPlay(result, myToken){
+    // Prefer the concrete production effect functions instead of the multiply-wrapped router.
+    const cb=()=>{if(myToken!==token)return;active=false;showSkip(false)};
+    try{
+      if(result.type==='great'||result.type==='super'){
+        if(typeof W.playLuxuryEffect==='function'){W.playLuxuryEffect(result,cb);return true}
+      }
+      if(result.type==='mystery'){
+        if(typeof W.playMysteryEffect==='function'){W.playMysteryEffect(result,cb);return true}
+      }
+      if(result.video?.platform==='youtube'){
+        if(typeof W.playYouTubeEffect==='function'){W.playYouTubeEffect(result,cb);return true}
+      }
+      if(result.video?.platform==='tiktok'){
+        if(typeof W.playTikTokEffect==='function'){W.playTikTokEffect(result,cb);return true}
+      }
+      if(typeof W.playCinematicCommon==='function'){W.playCinematicCommon(result,cb);return true}
+      if(typeof W.showSimpleEffect==='function'){W.showSimpleEffect(result);return true}
+    }catch(err){console.error('V43 direct test effect failed',err)}
+    return false;
+  }
+
+  function start(result){
+    if(!result)return;
+    close();
+    stopTest(false);
+    active=true;W.__v43Result=result;W.selectedResult=result;token++;
+    const myToken=token;
+    showSkip(true);
+    const ok=directPlay(result,myToken);
+    if(!ok){active=false;showSkip(false)}
+    // Safety timeout for test only.
+    setTimeout(()=>{if(myToken!==token)return;if(active)stopTest(false)},12000);
+  }
+
+  function render(){
+    const p=ensure(),grid=p.querySelector('#v43TestGrid');grid.innerHTML='';
+    const list=Array.isArray(W.omikuji)?W.omikuji:[];
+    list.forEach(r=>{
+      const b=document.createElement('button');b.type='button';b.className='v43TestBtn';b.textContent=r.name;
+      const act=e=>{e.preventDefault();e.stopImmediatePropagation();start(r)};
+      b.addEventListener('pointerdown',act,{capture:true,passive:false});
+      b.addEventListener('touchstart',act,{capture:true,passive:false});
+      b.addEventListener('click',act,{capture:true});
+      grid.appendChild(b);
+    });
+  }
+
+  W.openEffectTest=function(){render();ensure().classList.add('show')};
+  W.testRarity=function(name){const r=(W.omikuji||[]).find(x=>x.name===name);if(r)start(r)};
+
+  // Make the existing Home "全演出" button always route here.
+  document.addEventListener('pointerdown',e=>{
+    const b=e.target?.closest?.('button[onclick="openEffectTest()"]');
+    if(b){e.preventDefault();e.stopImmediatePropagation();W.openEffectTest()}
+  },{capture:true,passive:false});
+  document.addEventListener('click',e=>{
+    const b=e.target?.closest?.('button[onclick="openEffectTest()"]');
+    if(b){e.preventDefault();e.stopImmediatePropagation();W.openEffectTest()}
+  },{capture:true});
+
+  // Do not let old global finish handlers remove the test skip unexpectedly.
+  const oldFinish=W.finishEffect;
+  W.finishEffect=function(){
+    if(active){try{oldFinish?.apply(this,arguments)}catch(e){};active=false;showSkip(false);return}
+    return oldFinish?.apply(this,arguments);
+  };
+
+  W.__v43StopTest=()=>stopTest(false);
+})();
+</script>
 </body>
 </html>
+
+<style id="v42-real-test-css">
+#v42TestOverlay{position:fixed;inset:0;z-index:2147483000;display:none;align-items:center;justify-content:center;background:rgba(2,4,12,.95);padding:22px;backdrop-filter:blur(10px)}
+#v42TestOverlay.show{display:flex}
+#v42TestPanel{width:min(96vw,1100px);max-height:88vh;overflow:auto;border:1px solid rgba(255,255,255,.16);border-radius:24px;background:linear-gradient(145deg,rgba(18,25,48,.98),rgba(5,8,18,.98));box-shadow:0 30px 100px rgba(0,0,0,.55);padding:24px}
+#v42TestTitle{font:900 clamp(22px,3vw,38px)/1.2 Georgia,serif;letter-spacing:.08em;text-align:center;color:#f5f7ff;margin-bottom:8px}
+#v42TestNote{font:600 12px/1.5 Arial,sans-serif;letter-spacing:.08em;color:#aebbd3;text-align:center;margin-bottom:18px}
+#v42TestGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.v42TestBtn{min-height:76px;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:linear-gradient(145deg,#20345e,#10182c);color:#fff;font:900 15px/1.2 Arial,sans-serif;cursor:pointer;touch-action:manipulation;box-shadow:0 8px 22px rgba(0,0,0,.25)}
+.v42TestBtn:hover{transform:translateY(-2px);background:linear-gradient(145deg,#2b477d,#142039)}
+#v42TestClose{display:block;width:100%;margin-top:14px;padding:14px;border:0;border-radius:14px;background:#252e42;color:#fff;font:800 15px Arial,sans-serif;cursor:pointer}
+</style>
+<script id="v42-real-test-js">
+(function(){
+  const W=window;
+  let testActive=false;
+  let testToken=0;
+  let panel=null;
+
+  function ensurePanel(){
+    if(panel)return panel;
+    panel=document.createElement('div');
+    panel.id='v42TestOverlay';
+    panel.innerHTML='<div id="v42TestPanel"><div id="v42TestTitle">EFFECT TEST — REAL EFFECT ROUTER</div><div id="v42TestNote">ここでは新しい簡易演出を作らず、実際のおみくじで使っている演出ルーターをそのまま再生します。</div><div id="v42TestGrid"></div><button id="v42TestClose" type="button">閉じる</button></div>';
+    document.body.appendChild(panel);
+    panel.querySelector('#v42TestClose').addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();closePanel();},{capture:true,passive:false});
+    panel.querySelector('#v42TestClose').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();closePanel();},{capture:true});
+    return panel;
+  }
+
+  function closePanel(){
+    const p=ensurePanel();
+    p.classList.remove('show');
+  }
+
+  function getResults(){return Array.isArray(W.omikuji)?W.omikuji:[]}
+
+  function startRealTest(result){
+    if(!result)return;
+    closePanel();
+    testToken++;
+    const token=testToken;
+    testActive=true;
+    W.selectedResult=result;
+    // Do NOT use the old test engine / fallback. Use the same router as an actual draw.
+    try{
+      if(typeof W.playResult==='function'){
+        W.playResult(result,function(){
+          if(token!==testToken)return;
+          testActive=false;
+        });
+      }else if(typeof W.playMysteryEffect==='function'){
+        W.playMysteryEffect(result,function(){
+          if(token!==testToken)return;
+          testActive=false;
+        });
+      }
+    }catch(err){
+      console.error('V42 real test failed:',err);
+      testActive=false;
+    }
+  }
+
+  function render(){
+    const p=ensurePanel();
+    const grid=p.querySelector('#v42TestGrid');
+    grid.innerHTML='';
+    getResults().forEach((r)=>{
+      const b=document.createElement('button');
+      b.type='button';
+      b.className='v42TestBtn';
+      b.textContent=r.name;
+      b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();startRealTest(r)},{capture:true,passive:false});
+      b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();startRealTest(r)},{capture:true});
+      grid.appendChild(b);
+    });
+  }
+
+  // Override ONLY the test launcher. Normal draw/play logic is untouched.
+  W.openEffectTest=function(){render();ensurePanel().classList.add('show');};
+  W.testRarity=function(name){const r=getResults().find(x=>x.name===name);if(r)startRealTest(r)};
+
+  // Strong stop for the real test, but do not replace the normal router.
+  const oldForce=W.__forceOmikujiSkip;
+  W.__forceOmikujiSkip=function(e){
+    testToken++;
+    testActive=false;
+    try{e?.preventDefault();e?.stopPropagation();e?.stopImmediatePropagation()}catch(_){ }
+    if(typeof oldForce==='function')oldForce(e);
+    else if(typeof W.skipEffect==='function')W.skipEffect(e);
+  };
+
+  // Make the already-existing global SKIP explicitly available whenever a real test is running.
+  const oldPlayResult=W.playResult;
+  if(typeof oldPlayResult==='function' && !oldPlayResult.__v42wrapped){
+    const wrapped=function(result,cb){
+      testActive=true;
+      const done=()=>{testActive=false;if(typeof cb==='function')cb()};
+      return oldPlayResult.call(this,result,done);
+    };
+    wrapped.__v42wrapped=true;
+    W.playResult=wrapped;
+  }
+})();
+</script>
+
+<style id="v44-test-fix-css">
+  /* FINAL TEST UI: above every other layer, but hidden until requested. */
+  #v44TestOverlay{position:fixed!important;inset:0!important;z-index:2147483000!important;display:none!important;align-items:center!important;justify-content:center!important;background:rgba(0,0,0,.94)!important;padding:18px!important}
+  #v44TestOverlay.show{display:flex!important}
+  #v44TestPanel{width:min(96vw,1100px);max-height:90vh;overflow:auto;padding:24px;border-radius:24px;background:linear-gradient(145deg,#10182f,#050811);border:1px solid rgba(255,255,255,.18);box-shadow:0 30px 120px rgba(0,0,0,.7)}
+  #v44TestGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .v44TestBtn{min-height:70px;border:1px solid rgba(255,255,255,.15);border-radius:15px;background:linear-gradient(145deg,#21386b,#0d1528);color:#fff;font-weight:900;cursor:pointer;touch-action:manipulation}
+  .v44TestBtn:hover{filter:brightness(1.18);transform:translateY(-2px)}
+  #v44TestClose{width:100%;margin-top:14px;padding:14px;border:0;border-radius:14px;background:#263047;color:#fff;font-weight:900;cursor:pointer}
+  #effect.v44-test-active{z-index:2147482500!important}
+  #effect.v44-test-active .skip{z-index:2147483646!important;pointer-events:auto!important}
+  #effect.v44-test-active #effectGraphics{display:block!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+  #effect.v44-test-active #videoContainer{z-index:30!important}
+  #effect.v44-test-active .v44-force-visible{display:block!important;visibility:visible!important;opacity:1!important}
+</style>
+<script id="v44-test-engine">
+(function(){
+  'use strict';
+  const W=window;
+  let panel=null, running=false, token=0, timers=[];
+  const oldPlayResult=W.playResult;
+
+  function clearTimers(){ timers.forEach(clearTimeout); timers=[]; }
+  function safeCall(fn,...args){try{ if(typeof fn==='function') return fn(...args);}catch(e){console.warn('V44 test call failed',e)} }
+
+  function stopKnownAudio(){
+    const names=['stopMysteryCinematicAudio','stopV8Audio','stopV9','stopAudio','stopAllAudio','stopFxAudio','stopAllAudioNodes','stopCinematicAudio'];
+    names.forEach(n=>safeCall(W[n]));
+    try{if(W.__v6AudioNodes){W.__v6AudioNodes.forEach(n=>{try{n.stop?.()}catch(e){}});W.__v6AudioNodes=[]}}catch(e){}
+    try{if(W.__v8ctx){W.__v8ctx.close?.();W.__v8ctx=null}}catch(e){}
+    try{if(W.__v9AudioCtx){W.__v9AudioCtx.close?.();W.__v9AudioCtx=null}}catch(e){}
+  }
+
+  function hardStop(show){
+    token++; running=false; clearTimers(); stopKnownAudio();
+    try{ if(W.effectTimer){clearTimeout(W.effectTimer);W.effectTimer=null;} }catch(e){}
+    const effect=document.getElementById('effect');
+    const yt=document.getElementById('youtubeFrame'),tt=document.getElementById('tiktokFrame');
+    const video=document.getElementById('videoContainer');
+    if(yt)yt.src=''; if(tt)tt.src=''; if(video)video.style.display='none';
+    try{safeCall(W.finishEffect)}catch(e){}
+    if(effect){effect.classList.remove('v44-test-active');effect.style.zIndex='';effect.style.display='none'}
+    try{document.querySelectorAll('.v44-force-visible').forEach(x=>x.classList.remove('v44-force-visible'))}catch(e){}
+    if(show && W.selectedResult && typeof W.showResult==='function') safeCall(W.showResult,W.selectedResult,false);
+  }
+
+  function ensurePanel(){
+    if(panel)return panel;
+    panel=document.createElement('div'); panel.id='v44TestOverlay';
+    panel.innerHTML='<div id="v44TestPanel"><div style="text-align:center;font:900 28px/1.2 Georgia,serif;margin-bottom:8px">演出テスト</div><div style="text-align:center;color:#aebbd3;font:600 12px/1.5 Arial,sans-serif;margin-bottom:18px">ここでは実際におみくじで使う演出を確認します。押した演出がそのまま再生されます。</div><div id="v44TestGrid"></div><button id="v44TestClose" type="button">閉じる</button></div>';
+    document.body.appendChild(panel);
+    const close=()=>{panel.classList.remove('show'); hardStop(false)};
+    panel.querySelector('#v44TestClose').addEventListener('pointerdown',e=>{e.preventDefault();e.stopImmediatePropagation();close()},{capture:true,passive:false});
+    panel.querySelector('#v44TestClose').addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();close()},{capture:true});
+    return panel;
+  }
+
+  function forceVisibility(result){
+    const effect=document.getElementById('effect');
+    if(!effect)return;
+    effect.classList.add('v44-test-active');
+    effect.style.display='flex'; effect.style.visibility='visible'; effect.style.opacity='1';
+    const graphics=document.getElementById('effectGraphics');
+    if(graphics){graphics.style.display='block';graphics.style.visibility='visible';graphics.style.opacity='1'}
+    const text=document.getElementById('effectText'); if(text)text.style.display='block';
+    // Wake every known stage that may have been created by the real engine.
+    const sels=['.v31-stage','.v30-stage','.v29-stage','.v27-stage','.v26-stage','.v24-theme','.v24-stage','.v19-stage','.v18-stage','.v16-stage','.v12-stage','.v11-stage','#v9MysteryStage','#v6Stage','.v5-stage','.scene-city','.effect-rays','.effect-ring','.effect-light','.cine-core','.cine-orbit','.cine-burst','.cine-vignette','.cine-scan','.scene-glyph','.scene-crystal-field','.scene-golden-orb','.scene-shards','.scene-sparks','.scene-flame','.scene-eclipse-ring','.scene-water','.scene-noise','.scene-egypt','.scene-fire-particles','.scene-meteors','.scene-clock-hero','.scene-clock-corner','.scene-vines','.scene-code-rain','.scene-english-words','.scene-story'];
+    sels.forEach(sel=>document.querySelectorAll(sel).forEach(el=>{el.classList.add('v44-force-visible');el.style.visibility='visible'}));
+  }
+
+  function start(result){
+    if(!result)return;
+    if(panel)panel.classList.remove('show');
+    hardStop(false);
+    const my=++token; running=true; W.selectedResult=result;
+    const started = (typeof oldPlayResult==='function') ? safeCall(oldPlayResult,result,()=>{}) : false;
+    // The real renderer sometimes completes cleanup immediately; enforce visibility after it has mounted.
+    timers.push(setTimeout(()=>{if(my!==token||!running)return;forceVisibility(result)},40));
+    timers.push(setTimeout(()=>{if(my!==token||!running)return;forceVisibility(result)},180));
+    timers.push(setTimeout(()=>{if(my!==token||!running)return;forceVisibility(result)},650));
+    // Safety stop; does not alter the production 10s/13s logic before that point.
+    timers.push(setTimeout(()=>{if(my!==token)return;hardStop(true)},12000));
+    if(!started)console.warn('V44: no playResult function available');
+  }
+
+  function render(){
+    const p=ensurePanel(),g=p.querySelector('#v44TestGrid');g.innerHTML='';
+    const list=Array.isArray(W.omikuji)?W.omikuji:[];
+    list.forEach(r=>{const b=document.createElement('button');b.type='button';b.className='v44TestBtn';b.textContent=r.name;b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopImmediatePropagation();start(r)},{capture:true,passive:false});b.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();start(r)},{capture:true});g.appendChild(b)});
+  }
+
+  W.openEffectTest=function(){hardStop(false);render();ensurePanel().classList.add('show')};
+  W.testRarity=function(name){const r=(Array.isArray(W.omikuji)?W.omikuji:[]).find(x=>x.name===name);if(r)start(r)};
+
+  // One definitive SKIP handler during the real test.
+  const skipHandler=e=>{
+    if(!running)return;
+    if(e){e.preventDefault();e.stopImmediatePropagation();}
+    hardStop(true);
+  };
+  document.addEventListener('pointerdown',e=>{if(e.target?.closest?.('#effect.v44-test-active .skip,.v44-test-skip'))skipHandler(e)},{capture:true,passive:false});
+  document.addEventListener('click',e=>{if(e.target?.closest?.('#effect.v44-test-active .skip,.v44-test-skip'))skipHandler(e)},{capture:true});
+
+  // Always place a visible SKIP button over the real test effect, independent of old layers.
+  function ensureSkip(){
+    let b=document.getElementById('v44TestSkip');
+    if(!b){b=document.createElement('button');b.id='v44TestSkip';b.className='v44-test-skip';b.textContent='SKIP';b.style.cssText='position:fixed;top:18px;right:18px;z-index:2147483647;padding:12px 20px;border:1px solid rgba(255,255,255,.45);border-radius:12px;background:rgba(0,0,0,.8);color:#fff;font-weight:900;cursor:pointer;display:none!important;pointer-events:auto!important;';document.body.appendChild(b);b.addEventListener('pointerdown',skipHandler,{capture:true,passive:false});b.addEventListener('click',skipHandler,{capture:true});}
+    b.style.display=running?'block':'none';
+  }
+  const oldStart=start;
+  function startWrapped(r){oldStart(r);ensureSkip()}
+  // Replace renderer's start references by re-rendering with wrapped behavior.
+  const originalRender=render;
+  function renderWrapped(){
+    const p=ensurePanel(),g=p.querySelector('#v44TestGrid');g.innerHTML='';
+    (Array.isArray(W.omikuji)?W.omikuji:[]).forEach(r=>{const b=document.createElement('button');b.type='button';b.className='v44TestBtn';b.textContent=r.name;const act=e=>{e.preventDefault();e.stopImmediatePropagation();startWrapped(r)};b.addEventListener('pointerdown',act,{capture:true,passive:false});b.addEventListener('click',act,{capture:true});g.appendChild(b)});
+  }
+  W.openEffectTest=function(){hardStop(false);renderWrapped();ensurePanel().classList.add('show');};
+  const observer=setInterval(()=>{ensureSkip(); if(!running){const b=document.getElementById('v44TestSkip');if(b)b.style.display='none'}},100);
+  window.addEventListener('beforeunload',()=>{clearInterval(observer);hardStop(false)});
+})();
+</script>
+
+   
